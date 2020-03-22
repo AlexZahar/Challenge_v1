@@ -1,35 +1,36 @@
-// // import * as actionTypes from '../reducers/actions/actionTypes'
-// // import {updateObject} from '../utility'
-// import axios from 'axios'
+import * as actionTypes from '../reducers/actions/actionTypes'
+import {updateObject} from '../utility'
 
-// const initialState = {
-//     candidates: []
-// }
 
-// const getCandidates = (state, action) => {
-//     axios.get('http://personio-fe-test.herokuapp.com/api/v1/candidates')
-//     .then(function (response) {
-//       // handle success
-//       console.log(response);
-//     })
-//     .catch(function (error) {
-//       // handle error
-//       console.log(error);
-//     });
-// }
+const initialState = {
+    candidates: [],
+    error: false
+}
+const setCandidates = (state, action) => {
+    return updateObject( state, {
+        candidates: {
+            id: action.candidates.id,
+            email: action.candidates.email,
+            
+        },
+        error: false
+    } );
+};
 
-// const reducer = (state = initialState, action) => {
-//     // switch(action.type) {
-        
-//     //     case actionTypes.GET_CANDIDATES:
+const fetchCandidatesFailed = (state, action) => {
+    return updateObject( state, { error: true } );
+};
 
-//     //          return {
-//     //              ...state,
+const reducer = (state = initialState, action) => {
+    switch ( action.type ) {
+        case actionTypes.GET_CANDIDATES_REQUEST: return setCandidates(state, action);    
+        case actionTypes.GET_CANDIDATES_ERROR: return fetchCandidatesFailed(state, action);
+        default: return state;
+    }
 
   
-//     // }
+};
 
-//     return state;
-// };
+export default reducer;
 
-// export default reducer;
+// http://personio-fe-test.herokuapp.com/api/v1/candidates

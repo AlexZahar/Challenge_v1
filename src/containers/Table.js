@@ -1,24 +1,30 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux';
 import './Table.css'
 
 
 class Table extends Component {
-    componentDidMount() {
-     // const candidatesData =
-     //   "http://personio-fe-test.herokuapp.com/api/v1/candidates";
+//     componentDidMount() {
+//      // const candidatesData =
+//      //   "http://personio-fe-test.herokuapp.com/api/v1/candidates";
  
-     axios
-       .get("http://personio-fe-test.herokuapp.com/api/v1/candidates")
-       .then(response => {
-         console.log(response);
-         // const candidates = response.data.slice(0, 4);
-         // const updateAplicants = candidates.map(post => {
-         //   return { ...candidates, email: "something" };
-         // });
-         this.setState({ candidates: response.data.data });
-       });
-   }
+//      axios
+//        .get("http://personio-fe-test.herokuapp.com/api/v1/candidates")
+//        .then(response => {
+//          console.log(response);
+//          // const candidates = response.data.slice(0, 4);
+//          // const updateAplicants = candidates.map(post => {
+//          //   return { ...candidates, email: "something" };
+//          // });
+//          this.setState({ candidates: response.data.data });
+//        });
+//    }
+
+componentDidMount () {
+    console.log(this.props); 
+    this.props.onInitCandidates();
+}
    constructor(props) {
       super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
       this.state = { //state is by default an object
@@ -33,7 +39,7 @@ class Table extends Component {
 
    renderTableData() {
     return this.state.candidates.map((candidate, index) => {
-       const { id, name, age, email,birth_date, year_of_experience,position_applied,application_date,status} = candidate //destructuring
+       const { id, name, email,birth_date, year_of_experience,position_applied,application_date,status} = candidate //destructuring
        return (
           <tr key={id}>
              <td>{id}</td>
@@ -72,4 +78,20 @@ class Table extends Component {
    }
 }
 
-export default Table //exporting a component make it reusable and this is the beauty of react
+const mapStateToProps = state => {
+    return {
+        // ctr: state.ctr.counter,
+        // storedResult: state.res.results
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        // onIncrementCounter: () => dispatch(increment()),
+        // onDecrementCounter: () => dispatch(decrement()),
+        // onAddFiveCounter: () => dispatch(addFive(5)),
+        // onSubtractFiveCounter: () => dispatch(subtractFive(5)),
+        // onStoreResult: (result) => dispatch(storeResult(result)),
+        // onDeleteResult: (id) => dispatch(deleteResult(id))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Table) //exporting a component make it reusable and this is the beauty of react
