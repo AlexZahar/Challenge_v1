@@ -1,0 +1,1 @@
+export const GET_CANDIDATES = 'GET_CANDIDATES'
