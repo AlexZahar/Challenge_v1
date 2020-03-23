@@ -1,0 +1,44 @@
+.Candidates__wrapper {
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 5em;
+}
+.Candidates {
+  text-align: center;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  border: 3px solid #ddd;
+  width: 100%;
+  margin: 0 auto;
+}
+.Title {
+  text-align: left;
+  font-family: arial, sans-serif;
+  color: red;
+}
+
+.Candidates td,
+.Candidates th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.Candidates tr:nth-child(even) {
+  background-color: #d5f0f7;
+}
+
+.Candidates tr:hover {
+  background-color: #73daf5;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.Candidates th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #ffff00;
+  color: rgb(0, 0, 0);
+}
+
+/* #73daf5 */

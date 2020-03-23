@@ -1,0 +1,18 @@
+.Navigation {
+  display: flex;
+  background-color: #73daf5;
+  height: 4em;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.Navigation h3 {
+  /* text-align: left; */
+  font-size: 2em;
+  padding-left: 1em;
+  /* margin: 0 auto; */
+}
+
+.Navigation button {
+  padding-right: 3em;
+}
