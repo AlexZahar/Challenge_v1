@@ -7,10 +7,8 @@
   align-items: center;
 }
 .Navigation h3 {
-  /* text-align: left; */
   font-size: 2em;
   padding-left: 1em;
-  /* margin: 0 auto; */
 }
 
 .Navigation button {
