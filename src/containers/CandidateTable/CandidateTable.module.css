@@ -30,6 +30,7 @@
 .Candidates th {
     border: 1px solid #ddd;
     padding: 8px;
+    /* overflow: hidden; */
 
 }
 
@@ -49,6 +50,7 @@
     background-color: #ffff00;
     color: rgb(0, 0, 0);
     position: sticky;
+
     top: -0.05em;
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
     /* width: 100%; */
