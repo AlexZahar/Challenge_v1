@@ -2,16 +2,22 @@
     width: 80%;
     margin: 0 auto;
     padding-top: 5em;
-    height: 100%;
+
 }
 
 .Candidates {
     text-align: center;
+    position: relative;
+    display: block;
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     border: 3px solid #ddd;
     width: 100%;
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    height: 658px;
+    overflow: auto;
+    overflow-x: hidden;
+    border: 1px solid black;
 }
 
 .Title {
@@ -31,8 +37,7 @@
 }
 
 .Candidates tr:hover {
-    background-color: #73daf5;
-    opacity: 0.8;
+    background-color: #73dbf5bb;
     cursor: pointer;
 }
 

@@ -4,6 +4,7 @@
 }
 
 .App {
-  /* display: block;
-  height: 100%; */
+  display: block;
+  /* position: absolute; */
+  height: 100%;
 }
