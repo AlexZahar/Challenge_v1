@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classes from "./CandidateTable.module.css";
+import Aux from "../../hoc/Aux";
 
 class CandidateTable extends Component {
   constructor(props) {
@@ -39,15 +40,17 @@ class CandidateTable extends Component {
   render() {
     //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
     return (
-      <div className={classes.Candidates__wrapper}>
-        <h2 className={classes.Title}>Candidates Table</h2>
-        <table className={classes.Candidates}>
-          <tbody>
-            <tr>{this.renderTableHeader()}</tr>
-            {this.renderTableData()}
-          </tbody>
-        </table>
-      </div>
+      <Aux>
+        <div className={classes.Candidates__wrapper}>
+          <h2 className={classes.Title}>Candidates Table</h2>
+          <table className={classes.Candidates}>
+            <tbody>
+              <tr>{this.renderTableHeader()}</tr>
+              {this.renderTableData()}
+            </tbody>
+          </table>
+        </div>
+      </Aux>
     );
   }
 }
