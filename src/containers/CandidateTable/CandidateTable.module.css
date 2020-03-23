@@ -1,5 +1,5 @@
 .Candidates__wrapper {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     padding-top: 5em;
 
@@ -11,7 +11,7 @@
     display: block;
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    border: 3px solid #ddd;
+    border: 5px solid #ddd;
     width: 100%;
     /* margin: 0 auto; */
     height: 658px;
@@ -30,6 +30,7 @@
 .Candidates th {
     border: 1px solid #ddd;
     padding: 8px;
+
 }
 
 .Candidates tr:nth-child(even) {
@@ -47,6 +48,10 @@
     text-align: center;
     background-color: #ffff00;
     color: rgb(0, 0, 0);
+    position: sticky;
+    top: -0.05em;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+    /* width: 100%; */
 }
 
 /* #73daf5 */

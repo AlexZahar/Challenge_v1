@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import classes from "./CandidateTable.module.css";
 import Aux from "../../hoc/Aux";
 import axios from "axios";
+import Spinner from "../../components/Spinner/Spinner";
 
 class CandidateTable extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class CandidateTable extends Component {
     };
   }
   componentDidMount() {
-    // this.getCandidates();
+    this.getCandidates();
   }
 
   getCandidates = async () => {
@@ -41,7 +42,7 @@ class CandidateTable extends Component {
         id,
         name,
         birth_date,
-        years_of_experience,
+        year_of_experience,
         position_applied,
         application_date,
         status,
@@ -53,7 +54,7 @@ class CandidateTable extends Component {
           <td>{name}</td>
           <td>{email}</td>
           <td>{birth_date}</td>
-          <td>{years_of_experience}</td>
+          <td>{year_of_experience}</td>
           <td>{position_applied}</td>
           <td>{application_date}</td>
           <td>{status}</td>
@@ -76,25 +77,31 @@ class CandidateTable extends Component {
 
   render() {
     //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
-
+    let spinner = null;
     let table = null;
-    if (this.state.showTable) {
+    if (this.state.showTable | (this.state.candidates.length > 1)) {
+      spinner = null;
       table = (
-        <table className={classes.Candidates}>
-          <tbody>
-            <tr>{this.renderTableHeader()}</tr>
-            {this.renderTableData()}
-          </tbody>
-        </table>
+        <div>
+          <h2 className={classes.Title}>Candidates Table</h2>
+          <table className={classes.Candidates}>
+            <tbody>
+              <tr>{this.renderTableHeader()}</tr>
+              {this.renderTableData()}
+            </tbody>
+          </table>
+        </div>
       );
+    } else if (!this.state.showTable) {
+      spinner = <Spinner />;
     }
 
     return (
       <Aux>
-        <button onClick={this.toggleTableHandler}>Show Candidate Table</button>
+        {/* <button onClick={this.toggleTableHandler}>Show Candidate Table</button> */}
         <div className={classes.Candidates__wrapper}>
-          <h2 className={classes.Title}>Candidates Table</h2>
           {table}
+          {spinner}
         </div>
       </Aux>
     );

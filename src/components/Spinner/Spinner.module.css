@@ -1,32 +1,25 @@
 .Loader {
   font-size: 10px;
-  margin: 50px auto;
+  margin: 20vh auto;
   text-indent: -9999em;
   width: 11em;
   height: 11em;
+  ;
   border-radius: 50%;
   background: #73daf5;
-  background: -moz-linear-gradient(
-    left,
-    #73daf5 10%,
-    rgba(109, 221, 245, 0) 42%
-  );
-  background: -webkit-linear-gradient(
-    left,
-    #73daf5 10%,
-    rgba(109, 221, 245, 0) 42%
-  );
+  background: -moz-linear-gradient(left,
+      #73daf5 10%,
+      rgba(109, 221, 245, 0) 42%);
+  background: -webkit-linear-gradient(left,
+      #73daf5 10%,
+      rgba(109, 221, 245, 0) 42%);
   background: -o-linear-gradient(left, #73daf5 10%, rgba(109, 221, 245, 0) 42%);
-  background: -ms-linear-gradient(
-    left,
-    #73daf5 10%,
-    rgba(109, 221, 245, 0) 42%
-  );
-  background: linear-gradient(
-    to right,
-    #73daf5 10%,
-    rgba(109, 221, 245, 0) 42%
-  );
+  background: -ms-linear-gradient(left,
+      #73daf5 10%,
+      rgba(109, 221, 245, 0) 42%);
+  background: linear-gradient(to right,
+      #73daf5 10%,
+      rgba(109, 221, 245, 0) 42%);
   position: relative;
   -webkit-animation: load3 1.4s infinite linear;
   animation: load3 1.4s infinite linear;
@@ -34,6 +27,7 @@
   -ms-transform: translateZ(0);
   transform: translateZ(0);
 }
+
 .Loader:before {
   width: 50%;
   height: 50%;
@@ -44,8 +38,9 @@
   left: 0;
   content: "";
 }
+
 .Loader:after {
-  background: #fcfff6;
+  background: #fdfdfd;
   width: 75%;
   height: 75%;
   border-radius: 50%;
@@ -57,21 +52,25 @@
   bottom: 0;
   right: 0;
 }
+
 @-webkit-keyframes load3 {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
+
 @keyframes load3 {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
