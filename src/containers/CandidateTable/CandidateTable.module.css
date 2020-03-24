@@ -11,13 +11,20 @@
     display: block;
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    border: 5px solid #ddd;
+    /* border: 5px solid #ddd; */
+    -webkit-box-shadow: 0px 10px 15px -1px rgba(0,0,0,0.56);
+-moz-box-shadow: 0px 10px 15px -1px rgba(0,0,0,0.56);
+box-shadow: 0px 10px 15px -1px rgba(0,0,0,0.56);
+/* border-radius: 1em; */
     width: 100%;
     /* margin: 0 auto; */
+    border:0;
+
+   
     height: 658px;
     overflow: auto;
     overflow-x: hidden;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 .Title {
