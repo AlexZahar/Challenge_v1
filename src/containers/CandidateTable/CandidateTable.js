@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import classes from "./CandidateTable.module.css";
 import Aux from "../../hoc/Aux";
 import {connect} from 'react-redux'
-import axios from "axios";
+import Modal from '../../components/Modal/Modal'
+import axios from "../../axios-config";
 import Spinner from "../../components/Spinner/Spinner";
 import * as actionTypes from '../../store/reducers/actions/actionTypes'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
@@ -94,11 +95,17 @@ class CandidateTable extends Component {
     // } else if (!this.props.showTable) {
     //   spinner = <Spinner />;
     // }
-
+    let spinner = null
+    if(!this.props.candidates.length){
+      spinner = <Spinner/>
+    }
     return (
+   
+
       <Aux>
         {/* <button onClick={this.onInitCandidates()}>Show Candidate Table</button> */}
         <div className={classes.Candidates__wrapper}>
+          {spinner}
           {/* {table}
           {spinner} */}
           {/* {this.props.candidates} */}
@@ -125,4 +132,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(CandidateTable);
+export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(CandidateTable, axios));
