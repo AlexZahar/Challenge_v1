@@ -21,6 +21,7 @@ const fetchCandidatesSuccess = ( state, action ) => {
 };
 
 const fetchCandidatesFailed = ( state, action ) => {
+    console.log(state.loading)
     return updateObject( state, { loading: false } );
 };
 

@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 import * as actionTypes from '../../store/reducers/actions/actionTypes'
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import * as actionCreators from '../../store/reducers/actions/actionCreators'
 
 class CandidateTable extends Component {
@@ -16,7 +17,7 @@ class CandidateTable extends Component {
     // };
   
   componentDidMount() {
-    return this.onFetchCandidates()
+    return this.props.onFetchCandidates()
    
   }
 
@@ -100,7 +101,7 @@ class CandidateTable extends Component {
         <div className={classes.Candidates__wrapper}>
           {/* {table}
           {spinner} */}
-          {this.props.candidates}
+          {/* {this.props.candidates} */}
            </div>
       </Aux>
     );

@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes' 
-import axios from 'axios'
+import axios from '../../../axios-config'
 
 
 
@@ -26,19 +26,17 @@ export const fetchCandidatesStart = () => {
 export const fetchCandidates = () => {
     return dispatch => {
         // dispatch(fetchCandidatesStart());
-        axios.get( 'http://personio-fe-test.herokuapp.com/api/v1/candidates' )
+        axios.get( '/candidates' )
             .then( res => {
-                console.log(res.data)
-                const fetchedCandidates = [];
-                // for ( let key in res.data.data ) {
-                //     fetchedCandidates.push( {
-                //         ...res.data.data[key],
-                //         id: key
-                //     } );
-                // }
+                console.log(res)
+                const fetchedCandidates = []
+                fetchedCandidates.push(res.data.data)
+
+                console.log(fetchedCandidates)
                 dispatch(fetchCandidatesSuccess(fetchedCandidates));
             } )
             .catch( err => {
+                console.log(err.response)
                 dispatch(fetchCandidatesFail(err));
             } );
     };
