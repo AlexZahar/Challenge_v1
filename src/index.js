@@ -10,15 +10,11 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk'
 
-import sortReducer from './store/reducers/sort';
-import filterReducer from './store/reducers/filter';
-import resultReducer from './store/reducers/result';
+// import sortReducer from './store/reducers/sort';
+// import filterReducer from './store/reducers/filter';
+import reducer from './store/reducers/reducer';
 
-const rootReducer = combineReducers({
-    sort: sortReducer,
-    filter: filterReducer,
-    result: resultReducer
-})
+const rootReducer = reducer
 
 
 // Enabling Redux devtools for this project
