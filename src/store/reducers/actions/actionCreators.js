@@ -19,13 +19,14 @@ export const fetchCandidatesFail = ( error ) => {
 
 export const fetchCandidatesStart = () => {
     return {
-        type: actionTypes.FETCH_CANDIDATES_START
+        type: actionTypes.FETCH_CANDIDATES_START,
+        
     };
 };
 
 export const fetchCandidates = () => {
     return dispatch => {
-        // dispatch(fetchCandidatesStart());
+        dispatch(fetchCandidatesStart());
         axios.get( '/candidates' )
             .then( res => {
                 console.log(res)
