@@ -5,10 +5,15 @@ const initialState = {
     candidates: [],
     showTable: false,
     loading: false,
-    error:false
-    
+    error:false,
+    tabelData: false
 }
 
+
+const renderTableData = (state,action) => {
+return updateObject(state,{tabelData:true})
+}
+// ---------------------------------------
 const fetchCanditatesStart = ( state, action ) => {
     return updateObject( state, { loading: true } );
 };
@@ -31,6 +36,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_CANDIDATES_START: return fetchCanditatesStart(state,action)
         case actionTypes.FETCH_CANDIDATES_SUCCESS: return fetchCandidatesSuccess(state,action)
         case actionTypes.FETCH_CANDIDATES_FAILED: return fetchCandidatesFailed(state,action)
+        case actionTypes.RENDER_TABLE_DATA: return renderTableData(state,action)
         default: return state
 }
 }

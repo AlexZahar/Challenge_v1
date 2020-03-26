@@ -2,6 +2,20 @@ import * as actionTypes from './actionTypes'
 import axios from '../../../axios-config'
 
 
+export const renderTableData = () => {
+    return {
+        type: actionTypes.RENDER_TABLE_DATA
+    }
+}
+
+export const onRenderTableData = () => {
+return dispatch => {
+    console.log('pulaaa')
+    
+    dispatch(renderTableData())
+}
+}
+// ----------------------------------------------
 
 export const fetchCandidatesSuccess = ( candidates ) => {
     return {

@@ -43,32 +43,33 @@ class CandidateTable extends Component {
   //   }
   // };
 
-  // onRenderTableData() {
-  //   return this.state.props.candidates.map((candidates, index) => {
-  //     const {
-  //       id,
-  //       name,
-  //       birth_date,
-  //       year_of_experience,
-  //       position_applied,
-  //       application_date,
-  //       status,
-  //       email
-  //     } = candidates; //destructuring
-  //     return (
-  //       <tr key={id}>
-  //         <td>{id}</td>
-  //         <td>{name}</td>
-  //         <td>{email}</td>
-  //         <td>{birth_date}</td>
-  //         <td>{year_of_experience}</td>
-  //         <td>{position_applied}</td>
-  //         <td>{application_date}</td>
-  //         <td>{status}</td>
-  //       </tr>
-  //     );
-  //   });
-  // }
+  onRenderTableData() {
+    // return this.state.props.candidates.map((candidates, index) => {
+    //   const {
+    //     id,
+    //     name,
+    //     birth_date,
+    //     year_of_experience,
+    //     position_applied,
+    //     application_date,
+    //     status,
+    //     email
+    //   } = candidates; //destructuring
+    //   return (
+    //     <tr key={id}>
+    //       <td>{id}</td>
+    //       <td>{name}</td>
+    //       <td>{email}</td>
+    //       <td>{birth_date}</td>
+    //       <td>{year_of_experience}</td>
+    //       <td>{position_applied}</td>
+    //       <td>{application_date}</td>
+    //       <td>{status}</td>
+    //     </tr>
+    //   );
+    // });
+    console.log('this issss', this.props.tableData)
+  }
   // onToggleTableHandler = () => {
   //   this.onGetCandidatesHandler();
   //   const doesShow = this.state.showTable;
@@ -102,11 +103,20 @@ class CandidateTable extends Component {
     // } else if (!this.props.showTable) {
     //   spinner = <Spinner />;
     // }
+    if(this.props.tableData){
+      return this.onRenderTableData()
+    }
     let spinner = null
-    if(!this.props.candidates.length){
+    let button = null
+    if(this.props.loadingCandidates){
       spinner = <Spinner/>
     }
-    this.checkUndefined()
+    // if(this.props.candidates.error == 'error'){
+    //   console.log('OMGGGGGG')
+    //   button = (
+    //     <button onClick={this.props.onFetchCandidates}>Refresh</button>
+    //   )
+    // }
     
     return (
    
@@ -115,9 +125,11 @@ class CandidateTable extends Component {
         {/* <button onClick={this.onInitCandidates()}>Show Candidate Table</button> */}
         <div className={classes.Candidates__wrapper}>
           {spinner}
+          {button}
           {/* {table}
           {spinner} */}
           {/* {this.props.candidates} */}
+          <button onClick={this.props.onRenderTableData}>Refresh</button>
            </div>
       </Aux>
     );
@@ -126,7 +138,9 @@ class CandidateTable extends Component {
 
 const mapStateToProps = state => {
   return {
-candidates: state.candidates
+candidates: state.candidates,
+loadingCandidates: state.loading,
+tableData: state.tableData
   };
 }
 
@@ -134,7 +148,7 @@ const mapDispatchToProps = dispatch => {
   return {
     
     onFetchCandidates: () => dispatch(actionCreators.fetchCandidates()),
-    // onRenderTableHeaderHandler: () => dispatch(actionCreators.onRenderTableHeaderHandler()),
+    onRenderTableData: () => dispatch(actionCreators.onRenderTableData()),
     // onRenderTableDataHandler: () => dispatch(actionCreators.onRenderTableDataHandler()),
     // onToggleTableHandler: () => dispatch(actionCreators.onToggleTableHandler())
   }
