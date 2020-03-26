@@ -19,9 +19,16 @@ class CandidateTable extends Component {
   
   componentDidMount() {
     return this.props.onFetchCandidates()
+    
+    
    
   }
 
+  checkUndefined =() => {
+    if(typeof this.props.candidates[0] === 'undefined' ){
+      console.log('pizdaaa')
+    }
+  }
   // onGetCandidatesHandler = async () => {
   //   try {
   //     let res = await axios.get(
@@ -99,6 +106,8 @@ class CandidateTable extends Component {
     if(!this.props.candidates.length){
       spinner = <Spinner/>
     }
+    this.checkUndefined()
+    
     return (
    
 
