@@ -3,15 +3,14 @@ import { updateObject } from "../utility";
 
 const initialState = {
   candidates: [],
-  showTable: false,
+  isShowTable: false,
   loading: false,
   error: false,
   tabelData: false
 };
 
 const renderTableData = (state, action) => {
-  console.log(state.candidates);
-  return updateObject(state, { tabelData: true });
+  return updateObject(state, { isShowTable: true });
 };
 // ---------------------------------------
 const fetchCanditatesStart = (state, action) => {
@@ -19,12 +18,11 @@ const fetchCanditatesStart = (state, action) => {
 };
 
 const fetchCandidatesSuccess = (state, action) => {
-  console.log("REDUCER CANDIDATE STATE", action.candidates);
+  console.log("REDUCER", action.candidates);
   return updateObject(state, {
     candidates: action.candidates,
     loading: false
   });
-  console.log();
 };
 
 const fetchCandidatesFailed = (state, action) => {

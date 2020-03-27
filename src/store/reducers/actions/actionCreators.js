@@ -42,16 +42,7 @@ export const fetchCandidates = () => {
     axios
       .get("/candidates")
       .then(res => {
-        console.log("RESPONSE:", res);
-        // const fetchedCandidates = [];
         let { data } = res.data;
-        // fetchedCandidates.push(data);
-        // for (let candidate in res.data) {
-        //   fetchedCandidates.push({
-        //     ...res.data[candidate]
-        //   });
-        // }
-        console.log("CONVERTED RESPONSE", data);
         dispatch(fetchCandidatesSuccess(data));
       })
       .catch(err => {
@@ -60,21 +51,3 @@ export const fetchCandidates = () => {
       });
   };
 };
-
-// export const onGetCandidatesHandler = async () => {
-//     return {
-//         type: GET_CANDIDATES,
-//     }
-//     // try {
-//     //   let res = await axios.get(
-//     //     "http://personio-fe-test.herokuapp.com/api/v1/candidates"
-//     //   );
-//     //   console.log(res);
-//     //   let { data } = res.data;
-//     //   this.setState({ candidates: data });
-//     // } catch (err) {
-//     //   console.log(err);
-//     //   throw err;
-//     // }
-
-//   };

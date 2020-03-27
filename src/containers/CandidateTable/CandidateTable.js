@@ -10,14 +10,14 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionCreators from "../../store/reducers/actions/actionCreators";
 
 class CandidateTable extends Component {
-  constructor(props) {
-    super(props); //since we are extending class Table so we have to use super in order to override Component class constructor
-    this.state = {
-      //state is by default an object
-      // candidates: [],
-      showTable: false
-    };
-  }
+  // constructor(props) {
+  //   super(props); //since we are extending class Table so we have to use super in order to override Component class constructor
+  //   this.state = {
+  //     //state is by default an object
+  //     // candidates: [],
+  //     showTable: false
+  //   };
+  // }
   componentDidMount() {
     this.props.onFetchCandidates();
   }
@@ -49,20 +49,11 @@ class CandidateTable extends Component {
     });
   }
 
-  toggleTableHandler = () => {
-    // this.getCandidates();
-    this.props.onRenderTableData();
-    // this.renderTableHeader();
-    // this.renderTableData();
-    const doesShow = this.state.showTable;
-    this.setState({ showTable: !doesShow });
-    console.log("SHOW TABLE", this.state.showTable);
-    // const doesShow = this.state.showTable;
-    // this.setState({ showTable: !doesShow });
+  onRefreshTable = () => {
+    this.props.onFetchCandidates();
   };
 
   renderTableHeader() {
-    // console.log("render table HEADER FUNC", this.props.candidates[0]);
     let header = Object.keys(this.props.candidates[0]);
     return header.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
@@ -71,10 +62,11 @@ class CandidateTable extends Component {
 
   render() {
     //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
-    let spinner = null;
+
     let table = null;
-    if (this.state.showTable | (this.props.candidates.length > 1)) {
-      spinner = null;
+    if (this.props.loadingCandidates) {
+      table = <Spinner />;
+    } else if (!this.props.loadingCandidates && this.props.candidates.length) {
       table = (
         <div>
           <h2 className={classes.Title}>Candidates Table</h2>
@@ -86,17 +78,12 @@ class CandidateTable extends Component {
           </table>
         </div>
       );
-    } else if (!this.state.showTable) {
-      spinner = <Spinner />;
     }
 
     return (
       <Aux>
-        <button onClick={this.toggleTableHandler}>Show Candidate Table</button>
-        <div className={classes.Candidates__wrapper}>
-          {table}
-          {spinner}
-        </div>
+        <button onClick={this.onRefreshTable}>Refresh Table</button>
+        <div className={classes.Candidates__wrapper}>{table}</div>
       </Aux>
     );
   }
@@ -106,7 +93,7 @@ const mapStateToProps = state => {
   return {
     candidates: state.candidates,
     loadingCandidates: state.loading,
-    tableData: state.tableData
+    isShowTable: state.showTable
   };
 };
 
@@ -114,8 +101,6 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchCandidates: () => dispatch(actionCreators.fetchCandidates()),
     onRenderTableData: () => dispatch(actionCreators.onRenderTableData())
-    // onRenderTableDataHandler: () => dispatch(actionCreators.onRenderTableDataHandler()),
-    // onToggleTableHandler: () => dispatch(actionCreators.onToggleTableHandler())
   };
 };
 
