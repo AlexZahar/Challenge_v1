@@ -70,11 +70,11 @@ class CandidateTable extends Component {
   }
 
   render() {
+    //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
+    let spinner = null;
     let table = null;
-    if (this.props.loadingCandidates) {
-      table = <Spinner />;
-    }
-    if (this.state.doesShow) {
+    if (this.state.showTable | (this.props.candidates.length > 1)) {
+      spinner = null;
       table = (
         <div>
           <h2 className={classes.Title}>Candidates Table</h2>
@@ -86,12 +86,17 @@ class CandidateTable extends Component {
           </table>
         </div>
       );
+    } else if (!this.state.showTable) {
+      spinner = <Spinner />;
     }
 
     return (
       <Aux>
         <button onClick={this.toggleTableHandler}>Show Candidate Table</button>
-        <div className={classes.Candidates__wrapper}>{table}</div>
+        <div className={classes.Candidates__wrapper}>
+          {table}
+          {spinner}
+        </div>
       </Aux>
     );
   }

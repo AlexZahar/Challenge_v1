@@ -43,16 +43,16 @@ export const fetchCandidates = () => {
       .get("/candidates")
       .then(res => {
         console.log("RESPONSE:", res);
-        const fetchedCandidates = [];
+        // const fetchedCandidates = [];
         let { data } = res.data;
-        fetchedCandidates.push(data);
+        // fetchedCandidates.push(data);
         // for (let candidate in res.data) {
         //   fetchedCandidates.push({
         //     ...res.data[candidate]
         //   });
         // }
-        console.log("CONVERTED RESPONSE", fetchedCandidates);
-        dispatch(fetchCandidatesSuccess(fetchedCandidates));
+        console.log("CONVERTED RESPONSE", data);
+        dispatch(fetchCandidatesSuccess(data));
       })
       .catch(err => {
         console.log(err.response);
