@@ -23,6 +23,8 @@ class CandidateTable extends Component {
   }
 
   renderTableData() {
+    let currentYear = new Date().getFullYear();
+
     return this.props.candidates.map((candidate, index) => {
       const {
         id,
@@ -39,7 +41,7 @@ class CandidateTable extends Component {
           <td>{id}</td>
           <td>{name}</td>
           <td>{email}</td>
-          <td>{birth_date}</td>
+          <td>{currentYear - birth_date.slice(0, 4)}</td>
           <td>{year_of_experience}</td>
           <td>{position_applied}</td>
           <td>{application_date}</td>
@@ -54,9 +56,29 @@ class CandidateTable extends Component {
   };
 
   renderTableHeader() {
-    let header = Object.keys(this.props.candidates[0]);
+    const objKeys = Object.keys(this.props.candidates[0]);
+
+    // let header =
+    // const {
+    //   id,
+    //   name,
+    //   birth_date: 'age',
+    //   year_of_experience: 'years of experience',
+    //   position_applied:'position applied',
+    //   application_date:'aplied',
+    //   status,
+    //   email
+    // } = objKeys; //destructuring
+    // if (this.props.candidates.length === "undefined") {
+    //   alert("something");
+    // }
+    let header = objKeys;
     return header.map((key, index) => {
-      return <th key={index}>{key.toUpperCase()}</th>;
+      return (
+        <th key={index}>
+          {key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " ")}
+        </th>
+      );
     });
   }
 
