@@ -42,11 +42,16 @@ export const fetchCandidates = () => {
     axios
       .get("/candidates")
       .then(res => {
-        console.log("this is the response:", res);
+        console.log("RESPONSE:", res);
         const fetchedCandidates = [];
-        fetchedCandidates.push(res.data);
-
-        console.log("This is the converted response", fetchedCandidates);
+        let { data } = res.data;
+        fetchedCandidates.push(data);
+        // for (let candidate in res.data) {
+        //   fetchedCandidates.push({
+        //     ...res.data[candidate]
+        //   });
+        // }
+        console.log("CONVERTED RESPONSE", fetchedCandidates);
         dispatch(fetchCandidatesSuccess(fetchedCandidates));
       })
       .catch(err => {

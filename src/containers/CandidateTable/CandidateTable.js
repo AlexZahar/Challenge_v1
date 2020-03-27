@@ -14,7 +14,7 @@ class CandidateTable extends Component {
     super(props); //since we are extending class Table so we have to use super in order to override Component class constructor
     this.state = {
       //state is by default an object
-      candidates: [],
+      // candidates: [],
       showTable: false
     };
   }
@@ -51,11 +51,18 @@ class CandidateTable extends Component {
 
   toggleTableHandler = () => {
     // this.getCandidates();
+    this.props.onRenderTableData();
+    // this.renderTableHeader();
+    // this.renderTableData();
     const doesShow = this.state.showTable;
     this.setState({ showTable: !doesShow });
+    console.log("SHOW TABLE", this.state.showTable);
+    // const doesShow = this.state.showTable;
+    // this.setState({ showTable: !doesShow });
   };
 
   renderTableHeader() {
+    // console.log("render table HEADER FUNC", this.props.candidates[0]);
     let header = Object.keys(this.props.candidates[0]);
     return header.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
@@ -63,10 +70,11 @@ class CandidateTable extends Component {
   }
 
   render() {
-    let spinner = null;
     let table = null;
-    if (this.state.showTable | (this.props.candidates.length > 1)) {
-      spinner = null;
+    if (this.props.loadingCandidates) {
+      table = <Spinner />;
+    }
+    if (this.state.doesShow) {
       table = (
         <div>
           <h2 className={classes.Title}>Candidates Table</h2>
@@ -78,17 +86,12 @@ class CandidateTable extends Component {
           </table>
         </div>
       );
-    } else if (!this.state.showTable) {
-      spinner = <Spinner />;
     }
 
     return (
       <Aux>
         <button onClick={this.toggleTableHandler}>Show Candidate Table</button>
-        <div className={classes.Candidates__wrapper}>
-          {table}
-          {spinner}
-        </div>
+        <div className={classes.Candidates__wrapper}>{table}</div>
       </Aux>
     );
   }
