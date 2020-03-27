@@ -57,21 +57,6 @@ class CandidateTable extends Component {
 
   renderTableHeader() {
     const objKeys = Object.keys(this.props.candidates[0]);
-
-    // let header =
-    // const {
-    //   id,
-    //   name,
-    //   birth_date: 'age',
-    //   year_of_experience: 'years of experience',
-    //   position_applied:'position applied',
-    //   application_date:'aplied',
-    //   status,
-    //   email
-    // } = objKeys; //destructuring
-    // if (this.props.candidates.length === "undefined") {
-    //   alert("something");
-    // }
     let header = objKeys;
     return header.map((key, index) => {
       return (
