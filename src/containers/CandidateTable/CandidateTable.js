@@ -26,37 +26,68 @@ class CandidateTable extends Component {
     this.props.onFetchCandidates();
   }
 
-  // renderTableData() {
-  //   let currentYear = new Date().getFullYear();
-  //   let collectionData = this.props.candidates;
-  //   if (this.collection.length >= 2) {
-  //     collectionData = this.state.collection;
-  //   }
-  //   return collectionData.map((candidate, index) => {
-  //     const {
-  //       id,
-  //       name,
-  //       birth_date,
-  //       year_of_experience,
-  //       position_applied,
-  //       application_date,
-  //       status,
-  //       email
-  //     } = candidate; //destructuring
-  //     return (
-  //       <tr key={id}>
-  //         <td>{id}</td>
-  //         <td>{name}</td>
-  //         <td>{email}</td>
-  //         <td>{currentYear - birth_date.slice(0, 4)}</td>
-  //         <td>{year_of_experience}</td>
-  //         <td>{position_applied}</td>
-  //         <td>{application_date}</td>
-  //         <td>{status}</td>
-  //       </tr>
-  //     );
-  //   });
-  // }
+  renderTableData(collection) {
+    let currentYear = new Date().getFullYear();
+    // let collectionData = this.props.candidates;
+    // if (this.collection.length >= 2) {
+    //   collectionData = this.state.collection;
+    // }
+    if (this.state.collection.length > 1) {
+      return this.state.collection.map((candidate, index) => {
+        const {
+          id,
+          name,
+          birth_date,
+          year_of_experience,
+          position_applied,
+          application_date,
+          status,
+          email
+        } = candidate; //destructuring
+        return (
+          <Fragment key={id}>
+            <tr>
+              <td>{id}</td>
+              <td>{name}</td>
+              <td>{email}</td>
+              <td>{currentYear - birth_date.slice(0, 4)}</td>
+              <td>{year_of_experience}</td>
+              <td>{position_applied}</td>
+              <td>{application_date}</td>
+              <td>{status}</td>
+            </tr>
+          </Fragment>
+        );
+      });
+    } else if (this.props.candidates.length) {
+      return this.props.candidates.map((candidate, index) => {
+        const {
+          id,
+          name,
+          birth_date,
+          year_of_experience,
+          position_applied,
+          application_date,
+          status,
+          email
+        } = candidate; //destructuring
+        return (
+          <Fragment key={id}>
+            <tr>
+              <td>{id}</td>
+              <td>{name}</td>
+              <td>{email}</td>
+              <td>{currentYear - birth_date.slice(0, 4)}</td>
+              <td>{year_of_experience}</td>
+              <td>{position_applied}</td>
+              <td>{application_date}</td>
+              <td>{status}</td>
+            </tr>
+          </Fragment>
+        );
+      });
+    }
+  }
 
   // onRefreshTable = () => {
   //   this.props.onFetchCandidates();
@@ -110,7 +141,6 @@ class CandidateTable extends Component {
         direction: sortDirection
       }
     });
-    console.log("this is the collection", collection);
   }
 
   // checkCandidateList = () => {
@@ -124,46 +154,45 @@ class CandidateTable extends Component {
     //   table = <Spinner />;
     // } else
 
-    return (
-      this.props.candidates.length > 1 && (
-        <Aux>
-          <button onClick={this.checkCandidateList}>Refresh Table</button>
-          <button onClick={this.onSortByName}>Sort By Name</button>
+    return this.props.candidates.length > 1 ? (
+      <Aux>
+        <button onClick={this.checkCandidateList}>Refresh Table</button>
+        <button onClick={this.onSortByName}>Sort By Name</button>
 
-          <div className={classes.Candidates__wrapper}>
-            <table className={classes.Candidates}>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Birth Date</th>
-                  <th
-                    onClick={() =>
-                      this.handleColumnHeaderClick("year_of_experience")
-                    }
-                  >
-                    Years of Experience
-                  </th>
-                  <th
-                    onClick={() =>
-                      this.handleColumnHeaderClick("position_applied")
-                    }
-                  >
-                    Position Applied
-                  </th>
-                  <th
-                    onClick={() =>
-                      this.handleColumnHeaderClick("application_date")
-                    }
-                  >
-                    Application Date
-                  </th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.collection.map(candidate => (
+        <div className={classes.Candidates__wrapper}>
+          <table className={classes.Candidates}>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Birth Date</th>
+                <th
+                  onClick={() =>
+                    this.handleColumnHeaderClick("year_of_experience")
+                  }
+                >
+                  Years of Experience
+                </th>
+                <th
+                  onClick={() =>
+                    this.handleColumnHeaderClick("position_applied")
+                  }
+                >
+                  Position Applied
+                </th>
+                <th
+                  onClick={() =>
+                    this.handleColumnHeaderClick("application_date")
+                  }
+                >
+                  Application Date
+                </th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* {this.state.collection.map(candidate => (
                   <Fragment key={candidate.id}>
                     <tr>
                       <td>{candidate.id}</td>
@@ -176,13 +205,14 @@ class CandidateTable extends Component {
                       <td>{candidate.status}</td>
                     </tr>
                   </Fragment>
-                ))}
-                {/* {this.renderTableData()} */}
-              </tbody>
-            </table>
-          </div>
-        </Aux>
-      )
+                ))} */}
+              {this.renderTableData()}
+            </tbody>
+          </table>
+        </div>
+      </Aux>
+    ) : (
+      <Spinner />
     );
   }
 }
