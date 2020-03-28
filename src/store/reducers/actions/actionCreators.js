@@ -1,16 +1,18 @@
 import * as actionTypes from "./actionTypes";
 import axios from "../../../axios-config";
+import _ from "lodash";
 
-export const renderTableData = () => {
+export const renderTableData = sortedCandidatesByName => {
   return {
-    type: actionTypes.RENDER_TABLE_DATA
+    type: actionTypes.RENDER_TABLE_DATA,
+    candidates: sortedCandidatesByName
   };
 };
 
 export const onRenderTableData = () => {
   return dispatch => {
     console.log("pulaaa");
-
+    const sortedOBJ = _.sortBy(this.props.candidates, ["name"]);
     dispatch(renderTableData());
   };
 };

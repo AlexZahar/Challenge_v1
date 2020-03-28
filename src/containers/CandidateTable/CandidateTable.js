@@ -5,52 +5,58 @@ import { connect } from "react-redux";
 import Modal from "../../components/Modal/Modal";
 import axios from "../../axios-config";
 import Spinner from "../../components/Spinner/Spinner";
-import _ from "lodash";
+import { orderBy } from "lodash";
 import * as actionTypes from "../../store/reducers/actions/actionTypes";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionCreators from "../../store/reducers/actions/actionCreators";
 
 class CandidateTable extends Component {
   constructor(props) {
-    super(props); //since we are extending class Table so we have to use super in order to override Component class constructor
-    this.state = {
-      //state is by default an object
+    super(props);
 
-      isDataLoaded: false
+    this.state = {
+      collection: this.props.candidates,
+
+      sortParams: {
+        direction: undefined
+      }
     };
   }
   componentDidMount() {
     this.props.onFetchCandidates();
   }
 
-  //   renderTableData() {
-  //     let currentYear = new Date().getFullYear();
-  // return(<td>)
-  //   //   return this.props.candidates.map((candidate, index) => {
-  //   //     const {
-  //   //       id,
-  //   //       name,
-  //   //       birth_date,
-  //   //       year_of_experience,
-  //   //       position_applied,
-  //   //       application_date,
-  //   //       status,
-  //   //       email
-  //   //     } = candidate; //destructuring
-  //   //     return (
-  //   //       <tr key={id}>
-  //   //         <td>{id}</td>
-  //   //         <td>{name}</td>
-  //   //         <td>{email}</td>
-  //   //         <td>{currentYear - birth_date.slice(0, 4)}</td>
-  //   //         <td>{year_of_experience}</td>
-  //   //         <td>{position_applied}</td>
-  //   //         <td>{application_date}</td>
-  //   //         <td>{status}</td>
-  //   //       </tr>
-  //   //     );
-  //   //   });
+  // renderTableData() {
+  //   let currentYear = new Date().getFullYear();
+  //   let collectionData = this.props.candidates;
+  //   if (this.collection.length >= 2) {
+  //     collectionData = this.state.collection;
   //   }
+  //   return collectionData.map((candidate, index) => {
+  //     const {
+  //       id,
+  //       name,
+  //       birth_date,
+  //       year_of_experience,
+  //       position_applied,
+  //       application_date,
+  //       status,
+  //       email
+  //     } = candidate; //destructuring
+  //     return (
+  //       <tr key={id}>
+  //         <td>{id}</td>
+  //         <td>{name}</td>
+  //         <td>{email}</td>
+  //         <td>{currentYear - birth_date.slice(0, 4)}</td>
+  //         <td>{year_of_experience}</td>
+  //         <td>{position_applied}</td>
+  //         <td>{application_date}</td>
+  //         <td>{status}</td>
+  //       </tr>
+  //     );
+  //   });
+  // }
 
   // onRefreshTable = () => {
   //   this.props.onFetchCandidates();
@@ -74,7 +80,43 @@ class CandidateTable extends Component {
   //   // }
   //   console.log("AFTER SORT", sortedOBJ);
   // }
+  handleColumnHeaderClick(sortKey) {
+    const {
+      collection,
 
+      sortParams: { direction }
+    } = this.state;
+
+    // Check, what direction now should be
+
+    const sortDirection = direction === "desc" ? "asc" : "desc";
+
+    // Sort collection
+
+    const sortedCollection = orderBy(
+      this.props.candidates,
+
+      [sortKey],
+
+      [sortDirection]
+    );
+
+    //Update component state with new data
+
+    this.setState({
+      collection: sortedCollection,
+
+      sortParams: {
+        direction: sortDirection
+      }
+    });
+    console.log("this is the collection", collection);
+  }
+
+  // checkCandidateList = () => {
+  //   this.setState({ collection: this.props.candidates });
+  //   console.log("this is the candidate list state", this.state.candidateList);
+  // };
   render() {
     //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
     // let table = null;
@@ -85,7 +127,7 @@ class CandidateTable extends Component {
     return (
       this.props.candidates.length > 1 && (
         <Aux>
-          <button onClick={this.onRefreshTable}>Refresh Table</button>
+          <button onClick={this.checkCandidateList}>Refresh Table</button>
           <button onClick={this.onSortByName}>Sort By Name</button>
 
           <div className={classes.Candidates__wrapper}>
@@ -96,14 +138,32 @@ class CandidateTable extends Component {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Birth Date</th>
-                  <th>Years of Experience</th>
-                  <th>Position Applied</th>
-                  <th>Application Date</th>
+                  <th
+                    onClick={() =>
+                      this.handleColumnHeaderClick("year_of_experience")
+                    }
+                  >
+                    Years of Experience
+                  </th>
+                  <th
+                    onClick={() =>
+                      this.handleColumnHeaderClick("position_applied")
+                    }
+                  >
+                    Position Applied
+                  </th>
+                  <th
+                    onClick={() =>
+                      this.handleColumnHeaderClick("application_date")
+                    }
+                  >
+                    Application Date
+                  </th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                {this.props.candidates.map(candidate => (
+                {this.state.collection.map(candidate => (
                   <Fragment key={candidate.id}>
                     <tr>
                       <td>{candidate.id}</td>
@@ -117,6 +177,7 @@ class CandidateTable extends Component {
                     </tr>
                   </Fragment>
                 ))}
+                {/* {this.renderTableData()} */}
               </tbody>
             </table>
           </div>
