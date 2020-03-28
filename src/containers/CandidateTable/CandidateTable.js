@@ -203,7 +203,7 @@ CandidateTable.propTypes = {
   year_of_experieynce: PropTypes.number,
   position_applied: PropTypes.string,
   application_date: PropTypes.string,
-  status: PropTypes.string
+  status: PropTypes.oneOf(["approved", "rejected", "waiting"])
 };
 
 export default connect(
