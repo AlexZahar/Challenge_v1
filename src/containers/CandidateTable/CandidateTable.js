@@ -6,7 +6,7 @@ import Modal from "../../components/Modal/Modal";
 import axios from "../../axios-config";
 import PropTypes from "prop-types";
 import Spinner from "../../components/Spinner/Spinner";
-import { orderBy } from "lodash";
+import { orderBy, filter } from "lodash";
 import * as actionTypes from "../../store/reducers/actions/actionTypes";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionCreators from "../../store/reducers/actions/actionCreators";
@@ -16,6 +16,48 @@ class CandidateTable extends Component {
     super(props);
 
     this.state = {
+      // users: [
+      //   {
+      //     id: 2,
+      //     name: "Colette Morar",
+      //     email: "corinnestark@pacocha.co",
+      //     birth_date: "1998-08-03",
+      //     year_of_experience: 3,
+      //     position_applied: "backend",
+      //     application_date: "2017-11-18",
+      //     status: "rejected"
+      //   },
+      //   {
+      //     id: 1,
+      //     name: "Bishop",
+      //     email: "corinnestark@pacocha.co",
+      //     birth_date: "1998-08-03",
+      //     year_of_experience: 3,
+      //     position_applied: "frontend",
+      //     application_date: "2017-11-18",
+      //     status: "aproved"
+      //   },
+      //   {
+      //     id: 5,
+      //     name: "Janette",
+      //     email: "corinnestark@pacocha.co",
+      //     birth_date: "1998-08-03",
+      //     year_of_experience: 3,
+      //     position_applied: "Designer",
+      //     application_date: "2017-11-18",
+      //     status: "waiting"
+      //   },
+      //   {
+      //     id: 3,
+      //     name: "BAMBOLEO",
+      //     email: "corinnestark@pacocha.co",
+      //     birth_date: "1998-08-03",
+      //     year_of_experience: 3,
+      //     position_applied: "Designer",
+      //     application_date: "2017-11-18",
+      //     status: "waiting"
+      //   }
+      // ],
       collection: this.props.candidates,
 
       sortParams: {
@@ -69,9 +111,9 @@ class CandidateTable extends Component {
     });
   }
 
-  // onRefreshTable = () => {
-  //   this.props.onFetchCandidates();
-  // };
+  onRefreshTable = () => {
+    this.props.onFetchCandidates();
+  };
 
   // renderTableHeader() {
   //   const objKeys = Object.keys(this.props.candidates[0]);
@@ -120,50 +162,98 @@ class CandidateTable extends Component {
       }
     });
   }
-  // handleFilterColumnHeaderClick(sortKey) {
-  //   const {
-  //     sortParams: { direction }
-  //   } = this.state;
+  handleFilterClick = filterValue => {
+    const { collection } = this.state;
+    // let filteredByStatus = filter(collection, { status: "waiting" });
+    // console.log(filteredByStatus);
+    //   // Check, what direction now should be
 
-  //   // Check, what direction now should be
+    //   const sortDirection = direction === "desc" ? "asc" : "desc";
 
-  //   const sortDirection = direction === "desc" ? "asc" : "desc";
+    //   // Sort collection
 
-  //   // Sort collection
+    const filteredCollection = filter(this.props.candidates, filterValue);
 
-  //   const sortedCollection = orderBy(
-  //     this.props.candidates,
+    //   //Update component state with new data
 
-  //     [sortKey],
+    this.setState({
+      collection: filteredCollection
+    });
+  };
 
-  //     [sortDirection]
-  //   );
-
-  //   //Update component state with new data
-
-  //   this.setState({
-  //     collection: sortedCollection,
-
-  //     sortParams: {
-  //       direction: sortDirection
-  //     }
-  //   });
-  // }
   // checkCandidateList = () => {
   //   this.setState({ collection: this.props.candidates });
-  //   console.log("this is the candidate list state", this.state.candidateList);
   // };
-  render() {
-    //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
-    // let table = null;
-    // if (this.props.loadingCandidates) {
-    //   table = <Spinner />;
-    // } else
 
-    return this.props.candidates.length > 1 ? (
+  render() {
+    let isDataPresent = null;
+    let spinner = null;
+    let refreshDataButton = null;
+
+    if (typeof this.props.candidates === "undefined") {
+      isDataPresent = null;
+      refreshDataButton = <button>Refresh</button>;
+    } else if (
+      this.props.candidates.length &&
+      typeof this.props.candidates !== "undefined"
+    ) {
+      refreshDataButton = null;
+      isDataPresent = (
+        <Aux>
+          <button>Refresh Table</button>
+          <button onClick={() => this.handleFilterClick("waiting")}>
+            Sort By status: APROVED
+          </button>
+
+          <div className={classes.Candidates__wrapper}>
+            <table className={classes.Candidates}>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Age</th>
+                  <th
+                    onClick={() =>
+                      this.handleSortColumnHeaderClick("year_of_experience")
+                    }
+                  >
+                    Years of Experience
+                  </th>
+                  <th
+                    onClick={() =>
+                      this.handleSortColumnHeaderClick("position_applied")
+                    }
+                  >
+                    Position Applied
+                  </th>
+                  <th
+                    onClick={() =>
+                      this.handleSortColumnHeaderClick("application_date")
+                    }
+                  >
+                    Application Date
+                  </th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>{this.renderTableData()}</tbody>
+            </table>
+          </div>
+        </Aux>
+      );
+    } else {
+      isDataPresent = <Spinner />;
+    }
+
+    return typeof this.props.candidates === "undefined" ? (
+      <button onClick={this.onRefreshTable}>REFRESH TABLE</button>
+    ) : this.props.candidates >= 1 ? (
       <Aux>
-        <button onClick={this.checkCandidateList}>Refresh Table</button>
-        <button onClick={this.onSortByName}>Sort By Name</button>
+        <button>Refresh Table</button>
+        <button onClick={() => this.handleFilterClick("waiting")}>
+          Sort By status: APROVED
+        </button>
 
         <div className={classes.Candidates__wrapper}>
           <table className={classes.Candidates}>

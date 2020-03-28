@@ -45,6 +45,9 @@ export const fetchCandidates = () => {
       .get("/candidates")
       .then(res => {
         let { data } = res.data;
+        // if (typeof data === "undefined") {
+        //   console.log("this is undefineeeeeeed in actions");
+        // } else
         dispatch(fetchCandidatesSuccess(data));
       })
       .catch(err => {
