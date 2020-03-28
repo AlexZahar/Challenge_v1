@@ -73,7 +73,10 @@ class CandidateTable extends Component {
     let table = null;
     if (this.props.loadingCandidates) {
       table = <Spinner />;
-    } else if (!this.props.loadingCandidates && this.props.candidates.length) {
+    } else if (
+      !this.props.loadingCandidates &&
+      this.props.candidates.length >= 1
+    ) {
       table = (
         <div>
           <h2 className={classes.Title}>Candidates Table</h2>
