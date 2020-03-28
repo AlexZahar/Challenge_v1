@@ -4,6 +4,7 @@ import Aux from "../../hoc/Aux";
 import { connect } from "react-redux";
 import Modal from "../../components/Modal/Modal";
 import axios from "../../axios-config";
+import PropTypes from "prop-types";
 import Spinner from "../../components/Spinner/Spinner";
 import { orderBy } from "lodash";
 import * as actionTypes from "../../store/reducers/actions/actionTypes";
@@ -32,61 +33,40 @@ class CandidateTable extends Component {
     // if (this.collection.length >= 2) {
     //   collectionData = this.state.collection;
     // }
+    let tableData = null;
     if (this.state.collection.length > 1) {
-      return this.state.collection.map((candidate, index) => {
-        const {
-          id,
-          name,
-          birth_date,
-          year_of_experience,
-          position_applied,
-          application_date,
-          status,
-          email
-        } = candidate; //destructuring
-        return (
-          <Fragment key={id}>
-            <tr>
-              <td>{id}</td>
-              <td>{name}</td>
-              <td>{email}</td>
-              <td>{currentYear - birth_date.slice(0, 4)}</td>
-              <td>{year_of_experience}</td>
-              <td>{position_applied}</td>
-              <td>{application_date}</td>
-              <td>{status}</td>
-            </tr>
-          </Fragment>
-        );
-      });
+      tableData = this.state.collection;
     } else if (this.props.candidates.length) {
-      return this.props.candidates.map((candidate, index) => {
-        const {
-          id,
-          name,
-          birth_date,
-          year_of_experience,
-          position_applied,
-          application_date,
-          status,
-          email
-        } = candidate; //destructuring
-        return (
-          <Fragment key={id}>
-            <tr>
-              <td>{id}</td>
-              <td>{name}</td>
-              <td>{email}</td>
-              <td>{currentYear - birth_date.slice(0, 4)}</td>
-              <td>{year_of_experience}</td>
-              <td>{position_applied}</td>
-              <td>{application_date}</td>
-              <td>{status}</td>
-            </tr>
-          </Fragment>
-        );
-      });
+      tableData = this.props.candidates;
     }
+
+    return tableData.map((candidate, index) => {
+      const {
+        id,
+        name,
+        birth_date,
+        year_of_experience,
+        position_applied,
+        application_date,
+        status,
+        email
+      } = candidate; //destructuring
+
+      return (
+        <Fragment key={id}>
+          <tr>
+            <td>{id}</td>
+            <td>{name}</td>
+            <td>{email}</td>
+            <td>{currentYear - birth_date.slice(0, 4)}</td>
+            <td>{parseInt(year_of_experience)}</td>
+            <td>{position_applied}</td>
+            <td>{application_date}</td>
+            <td>{status}</td>
+          </tr>
+        </Fragment>
+      );
+    });
   }
 
   // onRefreshTable = () => {
@@ -113,8 +93,6 @@ class CandidateTable extends Component {
   // }
   handleColumnHeaderClick(sortKey) {
     const {
-      collection,
-
       sortParams: { direction }
     } = this.state;
 
@@ -166,7 +144,7 @@ class CandidateTable extends Component {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Birth Date</th>
+                <th>Age</th>
                 <th
                   onClick={() =>
                     this.handleColumnHeaderClick("year_of_experience")
@@ -191,23 +169,7 @@ class CandidateTable extends Component {
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>
-              {/* {this.state.collection.map(candidate => (
-                  <Fragment key={candidate.id}>
-                    <tr>
-                      <td>{candidate.id}</td>
-                      <td>{candidate.name}</td>
-                      <td>{candidate.email}</td>
-                      <td>{candidate.birth_date}</td>
-                      <td>{candidate.year_of_experience}</td>
-                      <td>{candidate.position_applied}</td>
-                      <td>{candidate.application_date}</td>
-                      <td>{candidate.status}</td>
-                    </tr>
-                  </Fragment>
-                ))} */}
-              {this.renderTableData()}
-            </tbody>
+            <tbody>{this.renderTableData()}</tbody>
           </table>
         </div>
       </Aux>
@@ -230,6 +192,18 @@ const mapDispatchToProps = dispatch => {
     onFetchCandidates: () => dispatch(actionCreators.fetchCandidates()),
     onRenderTableData: () => dispatch(actionCreators.onRenderTableData())
   };
+};
+
+CandidateTable.propTypes = {
+  handleColumnHeaderClick: PropTypes.func,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  email: PropTypes.string,
+  birth_date: PropTypes.string,
+  year_of_experieynce: PropTypes.number,
+  position_applied: PropTypes.string,
+  application_date: PropTypes.string,
+  status: PropTypes.string
 };
 
 export default connect(
