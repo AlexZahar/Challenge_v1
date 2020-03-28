@@ -91,7 +91,7 @@ class CandidateTable extends Component {
   //   // }
   //   console.log("AFTER SORT", sortedOBJ);
   // }
-  handleColumnHeaderClick(sortKey) {
+  handleSortColumnHeaderClick(sortKey) {
     const {
       sortParams: { direction }
     } = this.state;
@@ -120,7 +120,35 @@ class CandidateTable extends Component {
       }
     });
   }
+  // handleFilterColumnHeaderClick(sortKey) {
+  //   const {
+  //     sortParams: { direction }
+  //   } = this.state;
 
+  //   // Check, what direction now should be
+
+  //   const sortDirection = direction === "desc" ? "asc" : "desc";
+
+  //   // Sort collection
+
+  //   const sortedCollection = orderBy(
+  //     this.props.candidates,
+
+  //     [sortKey],
+
+  //     [sortDirection]
+  //   );
+
+  //   //Update component state with new data
+
+  //   this.setState({
+  //     collection: sortedCollection,
+
+  //     sortParams: {
+  //       direction: sortDirection
+  //     }
+  //   });
+  // }
   // checkCandidateList = () => {
   //   this.setState({ collection: this.props.candidates });
   //   console.log("this is the candidate list state", this.state.candidateList);
@@ -147,21 +175,21 @@ class CandidateTable extends Component {
                 <th>Age</th>
                 <th
                   onClick={() =>
-                    this.handleColumnHeaderClick("year_of_experience")
+                    this.handleSortColumnHeaderClick("year_of_experience")
                   }
                 >
                   Years of Experience
                 </th>
                 <th
                   onClick={() =>
-                    this.handleColumnHeaderClick("position_applied")
+                    this.handleSortColumnHeaderClick("position_applied")
                   }
                 >
                   Position Applied
                 </th>
                 <th
                   onClick={() =>
-                    this.handleColumnHeaderClick("application_date")
+                    this.handleSortColumnHeaderClick("application_date")
                   }
                 >
                   Application Date
