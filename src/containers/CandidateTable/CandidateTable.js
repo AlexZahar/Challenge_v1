@@ -59,7 +59,7 @@ class CandidateTable extends Component {
       //   }
       // ],
       collection: this.props.candidates,
-
+      undefinedDataRefreshBtn: false,
       sortParams: {
         direction: undefined
       }
@@ -113,6 +113,7 @@ class CandidateTable extends Component {
 
   onRefreshTable = () => {
     this.props.onFetchCandidates();
+    this.setState({ undefinedDataRefreshBtn: false });
   };
 
   // renderTableHeader() {
@@ -186,69 +187,69 @@ class CandidateTable extends Component {
   // };
 
   render() {
-    let isDataPresent = null;
-    let spinner = null;
-    let refreshDataButton = null;
+    // let isDataPresent = null;
+    // let spinner = null;
+    // let refreshDataButton = null;
 
-    if (typeof this.props.candidates === "undefined") {
-      isDataPresent = null;
-      refreshDataButton = <button>Refresh</button>;
-    } else if (
-      this.props.candidates.length &&
-      typeof this.props.candidates !== "undefined"
-    ) {
-      refreshDataButton = null;
-      isDataPresent = (
-        <Aux>
-          <button>Refresh Table</button>
-          <button onClick={() => this.handleFilterClick("waiting")}>
-            Sort By status: APROVED
-          </button>
+    // if (typeof this.props.candidates === "undefined") {
+    //   isDataPresent = null;
+    //   refreshDataButton = <button>Refresh</button>;
+    // } else if (
+    //   this.props.candidates.length &&
+    //   typeof this.props.candidates !== "undefined"
+    // ) {
+    //   refreshDataButton = null;
+    //   isDataPresent = (
+    //     <Aux>
+    //       <button>Refresh Table</button>
+    //       <button onClick={() => this.handleFilterClick("waiting")}>
+    //         Sort By status: APROVED
+    //       </button>
 
-          <div className={classes.Candidates__wrapper}>
-            <table className={classes.Candidates}>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Age</th>
-                  <th
-                    onClick={() =>
-                      this.handleSortColumnHeaderClick("year_of_experience")
-                    }
-                  >
-                    Years of Experience
-                  </th>
-                  <th
-                    onClick={() =>
-                      this.handleSortColumnHeaderClick("position_applied")
-                    }
-                  >
-                    Position Applied
-                  </th>
-                  <th
-                    onClick={() =>
-                      this.handleSortColumnHeaderClick("application_date")
-                    }
-                  >
-                    Application Date
-                  </th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>{this.renderTableData()}</tbody>
-            </table>
-          </div>
-        </Aux>
-      );
-    } else {
-      isDataPresent = <Spinner />;
-    }
+    //       <div className={classes.Candidates__wrapper}>
+    //         <table className={classes.Candidates}>
+    //           <thead>
+    //             <tr>
+    //               <th>ID</th>
+    //               <th>Name</th>
+    //               <th>Email</th>
+    //               <th>Age</th>
+    //               <th
+    //                 onClick={() =>
+    //                   this.handleSortColumnHeaderClick("year_of_experience")
+    //                 }
+    //               >
+    //                 Years of Experience
+    //               </th>
+    //               <th
+    //                 onClick={() =>
+    //                   this.handleSortColumnHeaderClick("position_applied")
+    //                 }
+    //               >
+    //                 Position Applied
+    //               </th>
+    //               <th
+    //                 onClick={() =>
+    //                   this.handleSortColumnHeaderClick("application_date")
+    //                 }
+    //               >
+    //                 Application Date
+    //               </th>
+    //               <th>Status</th>
+    //             </tr>
+    //           </thead>
+    //           <tbody>{this.renderTableData()}</tbody>
+    //         </table>
+    //       </div>
+    //     </Aux>
+    //   );
+    // } else {
+    //   isDataPresent = <Spinner />;
+    // }
 
     return typeof this.props.candidates === "undefined" ? (
       <button onClick={this.onRefreshTable}>REFRESH TABLE</button>
-    ) : this.props.candidates >= 1 ? (
+    ) : this.props.candidates.length >= 1 ? (
       <Aux>
         <button>Refresh Table</button>
         <button onClick={() => this.handleFilterClick("waiting")}>
