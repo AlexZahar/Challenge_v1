@@ -134,7 +134,6 @@ class CandidateTable extends Component {
       collectionToSort = this.state.filteredCollection;
     }
 
-    console.log(sortKey);
     const sortedData = orderBy(
       collectionToSort,
 
