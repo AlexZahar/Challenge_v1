@@ -58,7 +58,7 @@ class CandidateTable extends Component {
       //     status: "waiting"
       //   }
       // ],
-      collection: this.props.candidates,
+      sortedCollection: this.props.candidates,
       undefinedDataRefreshBtn: false,
       sortParams: {
         direction: undefined
@@ -68,16 +68,12 @@ class CandidateTable extends Component {
   componentDidMount() {
     this.props.onFetchCandidates();
   }
-
-  renderTableData(collection) {
+  // ------------------------------------------------------------------------
+  renderTableData() {
     let currentYear = new Date().getFullYear();
-    // let collectionData = this.props.candidates;
-    // if (this.collection.length >= 2) {
-    //   collectionData = this.state.collection;
-    // }
     let tableData = null;
-    if (this.state.collection.length > 1) {
-      tableData = this.state.collection;
+    if (this.state.sortedCollection.length > 1) {
+      tableData = this.state.sortedCollection;
     } else if (this.props.candidates.length) {
       tableData = this.props.candidates;
     }
@@ -110,30 +106,12 @@ class CandidateTable extends Component {
       );
     });
   }
-
+  // ---------------------------------------------------------------------------
   onRefreshTable = () => {
     this.props.onFetchCandidates();
     this.setState({ undefinedDataRefreshBtn: false });
   };
-
-  // renderTableHeader() {
-  //   const objKeys = Object.keys(this.props.candidates[0]);
-  //   let header = objKeys;
-  //   return header.map((key, index) => {
-  //     return (
-  //       <th key={index}>
-  //         {key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " ")}
-  //       </th>
-  //     );
-  //   });
-  // }
-  // onSortByName() {
-  //   // console.log("BEFORE SORT", this.state.candidates);
-  //   // if (!this.props.loadingCandidates && this.props.candidates.length > 1) {
-  //   const sortedOBJ = _.sortBy(this.props.candidates, ["name"]);
-  //   // }
-  //   console.log("AFTER SORT", sortedOBJ);
-  // }
+  // ------------------------------------------------------------------------
   handleSortColumnHeaderClick(sortKey) {
     const {
       sortParams: { direction }
@@ -145,7 +123,7 @@ class CandidateTable extends Component {
 
     // Sort collection
 
-    const sortedCollection = orderBy(
+    const sortedData = orderBy(
       this.props.candidates,
 
       [sortKey],
@@ -156,16 +134,17 @@ class CandidateTable extends Component {
     //Update component state with new data
 
     this.setState({
-      collection: sortedCollection,
+      sortedCollection: sortedData,
 
       sortParams: {
         direction: sortDirection
       }
     });
   }
+  // ----------------------------------------------------------------------------
 
   handleFilterClick = (filterKey, filterValue) => {
-    const { collection } = this.state;
+    const { sortedCollection } = this.state;
     // let filteredByStatus = filter(collection, { status: "waiting" });
     // console.log(filteredByStatus);
     //   // Check, what direction now should be
@@ -189,68 +168,8 @@ class CandidateTable extends Component {
   // checkCandidateList = () => {
   //   this.setState({ collection: this.props.candidates });
   // };
-
+  // ---------------------------------------------------------------------------------
   render() {
-    // let isDataPresent = null;
-    // let spinner = null;
-    // let refreshDataButton = null;
-
-    // if (typeof this.props.candidates === "undefined") {
-    //   isDataPresent = null;
-    //   refreshDataButton = <button>Refresh</button>;
-    // } else if (
-    //   this.props.candidates.length &&
-    //   typeof this.props.candidates !== "undefined"
-    // ) {
-    //   refreshDataButton = null;
-    //   isDataPresent = (
-    //     <Aux>
-    //       <button>Refresh Table</button>
-    //       <button onClick={() => this.handleFilterClick("waiting")}>
-    //         Sort By status: APROVED
-    //       </button>
-
-    //       <div className={classes.Candidates__wrapper}>
-    //         <table className={classes.Candidates}>
-    //           <thead>
-    //             <tr>
-    //               <th>ID</th>
-    //               <th>Name</th>
-    //               <th>Email</th>
-    //               <th>Age</th>
-    //               <th
-    //                 onClick={() =>
-    //                   this.handleSortColumnHeaderClick("year_of_experience")
-    //                 }
-    //               >
-    //                 Years of Experience
-    //               </th>
-    //               <th
-    //                 onClick={() =>
-    //                   this.handleSortColumnHeaderClick("position_applied")
-    //                 }
-    //               >
-    //                 Position Applied
-    //               </th>
-    //               <th
-    //                 onClick={() =>
-    //                   this.handleSortColumnHeaderClick("application_date")
-    //                 }
-    //               >
-    //                 Application Date
-    //               </th>
-    //               <th>Status</th>
-    //             </tr>
-    //           </thead>
-    //           <tbody>{this.renderTableData()}</tbody>
-    //         </table>
-    //       </div>
-    //     </Aux>
-    //   );
-    // } else {
-    //   isDataPresent = <Spinner />;
-    // }
-
     return typeof this.props.candidates === "undefined" ? (
       <button onClick={this.onRefreshTable}>REFRESH TABLE</button>
     ) : this.props.candidates.length >= 1 ? (
