@@ -38,15 +38,19 @@ class CandidateTable extends Component {
   renderTableData() {
     let currentYear = new Date().getFullYear();
     let tableData = null;
+    let lowerCaseQuerry = this.state.querry.toLowerCase();
 
-    if (this.state.sortedCollection.length < 1) {
+    if (this.state.querry && this.state.columnToQuerry !== "Default") {
+      let filtered = this.props.candidates.filter(x =>
+        x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
+      );
+
+      tableData = filtered;
+    } else if (this.state.sortedCollection.length < 1) {
       tableData = this.props.candidates;
-    } else if (this.state.sortedCollection.length >= 1) {
+    } else if ((this.state.sortedCollection.length >= 1) | this.state.querry) {
       tableData = this.state.sortedCollection;
     }
-    //  else if (this.state.filteredCollection.length >= 1) {
-    //   tableData = this.state.filteredCollection;
-    // }
 
     return tableData.map((candidate, index) => {
       const {
@@ -85,6 +89,7 @@ class CandidateTable extends Component {
   handleSortColumnHeaderClick(sortKey) {
     const {
       querry,
+
       sortParams: { direction }
     } = this.state;
 
@@ -133,17 +138,32 @@ class CandidateTable extends Component {
     });
   };
 
+  searchBar = () => {
+    if (this.state.columnToQuerry !== "Default") {
+      return (
+        <TextField
+          id="outlined-search"
+          label="Querry"
+          type="search"
+          value={this.state.querry}
+          variant="outlined"
+          onChange={e => this.setState({ querry: e.target.value })}
+        />
+      );
+    }
+  };
+
   // checkCandidateList = () => {
   //   this.setState({ collection: this.props.candidates });
   // };
   // ---------------------------------------------------------------------------------
   render() {
-    const lowerCaseQuerry = this.state.querry.toLowerCase();
-    if (this.state.querry) {
-      this.props.candidates.filter(x =>
-        x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
-      );
-    }
+    // let lowerCaseQuerry = this.state.querry.toLowerCase();
+    // if (this.state.querry) {
+    //   this.props.candidates.filter(x =>
+    //     x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
+    //   );
+    // }
     return typeof this.props.candidates === "undefined" ? (
       <Modal />
     ) : this.props.candidates.length >= 1 ? (
@@ -164,41 +184,17 @@ class CandidateTable extends Component {
               id: "outlined-age-native-simple"
             }}
           >
-            <option aria-label="None" value="Default" />
+            <option aria-label="None" value="Default">
+              Default
+            </option>
+
             <option value="name">Name</option>
             <option value="position_applied">Position Applied</option>
             <option value="status">Status</option>
           </Select>
         </FormControl>
-        <TextField
-          id="outlined-search"
-          label="Querry"
-          type="search"
-          value={this.state.querry}
-          variant="outlined"
-          onChange={e => this.setState({ querry: e.target.value })}
-        />
 
-        {/* <button>Refresh Table</button>
-        <button onClick={() => this.handleFilterClick("status", "waiting")}>
-          Sort By status: WAITING
-        </button>
-        <button onClick={() => this.handleFilterClick("status", "rejected")}>
-          Sort By status: REJECTED
-        </button>
-        <button onClick={() => this.handleFilterClick("status", "approved")}>
-          Sort By status: APROVED
-        </button>
-        <button
-          onClick={() =>
-            this.handleFilterClick("position_applied", "Administrator")
-          }
-        >
-          Sort By status: Administrator
-        </button>
-        <button onClick={() => this.handleFilterClick(null, null)}>
-          Sort By status: Default
-        </button> */}
+        {this.searchBar()}
 
         <div className={classes.Candidates__wrapper}>
           <table className={classes.Candidates}>

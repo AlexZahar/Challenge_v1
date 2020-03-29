@@ -30,7 +30,9 @@
   font-family: "Open Sans", Arial, Helvetica, sans-serif;
   color: rgb(0, 0, 0);
 }
-
+.Candidates table {
+  width: 100%;
+}
 .Candidates td,
 .Candidates th {
   border: 1px solid #ddd;
