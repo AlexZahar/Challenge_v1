@@ -120,15 +120,6 @@ class CandidateTable extends Component {
   // ----------------------------------------------------------------------------
 
   handleFilterClick = (filterKey, filterValue) => {
-    // const { sortedCollection } = this.state;
-    // let filteredByStatus = filter(collection, { status: "waiting" });
-    // console.log(filteredByStatus);
-    //   // Check, what direction now should be
-
-    //   const sortDirection = direction === "desc" ? "asc" : "desc";
-
-    //   // Sort collection
-
     const filteredCollectionData = filter(this.props.candidates, [
       filterKey,
       filterValue
@@ -147,6 +138,12 @@ class CandidateTable extends Component {
   // };
   // ---------------------------------------------------------------------------------
   render() {
+    const lowerCaseQuerry = this.state.querry.toLowerCase();
+    if (this.state.querry) {
+      this.props.candidates.filter(x =>
+        x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
+      );
+    }
     return typeof this.props.candidates === "undefined" ? (
       <Modal />
     ) : this.props.candidates.length >= 1 ? (
