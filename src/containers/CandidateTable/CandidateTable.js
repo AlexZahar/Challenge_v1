@@ -151,6 +151,28 @@ class CandidateTable extends Component {
       <Modal />
     ) : this.props.candidates.length >= 1 ? (
       <Aux>
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel htmlFor="filter-status">Search for</InputLabel>
+          <Select
+            native
+            value={this.state.columnToQuerry}
+            onChange={event => {
+              this.setState({
+                columnToQuerry: event.target.value
+              });
+            }}
+            label="Search for"
+            inputProps={{
+              name: "",
+              id: "outlined-age-native-simple"
+            }}
+          >
+            <option aria-label="None" value="Default" />
+            <option value="name">Name</option>
+            <option value="position_applied">Position Applied</option>
+            <option value="status">Status</option>
+          </Select>
+        </FormControl>
         <TextField
           id="outlined-search"
           label="Querry"
@@ -160,26 +182,6 @@ class CandidateTable extends Component {
           onChange={e => this.setState({ querry: e.target.value })}
         />
 
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel htmlFor="filter-status">Search for</InputLabel>
-          <Select
-            native
-            value={this.state.columnToQuerry}
-            onChange={(event, index, value) => {
-              this.setState({ columnToQuerry: value });
-            }}
-            label="input"
-            inputProps={{
-              name: "",
-              id: "outlined-age-native-simple"
-            }}
-          >
-            <option aria-label="None" value="" />
-            <option value="name">Name</option>
-            <option value="position_applied">Position Applied</option>
-            <option value="status">Status</option>
-          </Select>
-        </FormControl>
         {/* <button>Refresh Table</button>
         <button onClick={() => this.handleFilterClick("status", "waiting")}>
           Sort By status: WAITING
