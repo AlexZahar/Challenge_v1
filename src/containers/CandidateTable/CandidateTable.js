@@ -28,6 +28,7 @@ class CandidateTable extends Component {
         direction: undefined
       },
       querry: "",
+      isListFiltered: false,
       columnToQuerry: "status"
     };
   }
@@ -39,18 +40,32 @@ class CandidateTable extends Component {
     let currentYear = new Date().getFullYear();
     let tableData = null;
     let lowerCaseQuerry = this.state.querry.toLowerCase();
+    // this.state.columnToQuerry !== "Default"
+    // if (this.state.querry && this.state.sortedCollection.length <= 1) {
+    // let filteredData = this.props.candidates.filter(x =>
+    //   x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
+    // );
+    // tableData = filteredData;
+    // } else if (this.state.querry && this.state.sortedCollection > 1) {
+    //   tableData = this.state.sortedCollection;
+    // } else if (this.state.sortedCollection.length >= 1) {
+    //   tableData = this.state.sortedCollection;
+    // } else {
+    //   tableData = this.props.candidates;
 
-    if (this.state.querry && this.state.columnToQuerry !== "Default") {
+    if (this.state.querry && this.state.sortedCollection.length <= 1) {
       let filteredData = this.props.candidates.filter(x =>
         x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
       );
       tableData = filteredData;
-    } else if (this.state.sortedCollection.length >= 1) {
-      tableData = this.state.sortedCollection;
-    } else if (this.state.sortedCollection.length < 1) {
+    } else if (this.state.sortedCollection.length > 1) {
+      let filteredData = this.state.sortedCollection.filter(x =>
+        x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
+      );
+      tableData = filteredData;
+    } else {
       tableData = this.props.candidates;
     }
-
     return tableData.map((candidate, index) => {
       const {
         id,
@@ -87,8 +102,6 @@ class CandidateTable extends Component {
   // ------------------------------------------------------------------------
   handleSortColumnHeaderClick(sortKey) {
     const {
-      querry,
-
       sortParams: { direction }
     } = this.state;
 
@@ -96,18 +109,13 @@ class CandidateTable extends Component {
 
     const sortDirection = direction === "desc" ? "asc" : "desc";
 
-    let lowerCaseQuerry = this.state.querry.toLowerCase();
-
     // Sort collection
     let collectionToSort;
-    let filteredCollection;
-    if (this.state.querry && this.state.columnToQuerry !== "Default") {
-      filteredCollection = this.props.candidates.filter(x =>
-        x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
-      );
-      collectionToSort = filteredCollection;
-    } else if (this.state.filteredCollection.length < 1) {
+
+    if (this.state.sortedCollection.length < 1) {
       collectionToSort = this.props.candidates;
+    } else {
+      collectionToSort = this.state.sortedCollection;
     }
 
     const sortedData = orderBy(
@@ -129,19 +137,19 @@ class CandidateTable extends Component {
   }
   // ----------------------------------------------------------------------------
 
-  handleFilterClick = (filterKey, filterValue) => {
-    const filteredCollectionData = filter(this.props.candidates, [
-      filterKey,
-      filterValue
-    ]);
+  // handleFilterClick = (filterKey, filterValue) => {
+  //   const filteredCollectionData = filter(this.props.candidates, [
+  //     filterKey,
+  //     filterValue
+  //   ]);
 
-    //   //Update component state with new data
+  //   //   //Update component state with new data
 
-    this.setState({
-      filteredCollection: filteredCollectionData,
-      sortedCollection: filteredCollectionData
-    });
-  };
+  //   this.setState({
+  //     filteredCollection: filteredCollectionData,
+  //     sortedCollection: filteredCollectionData
+  //   });
+  // };
   formSelectorFilter = () => {
     return (
       <FormControl variant="outlined" className={classes.formControl}>
