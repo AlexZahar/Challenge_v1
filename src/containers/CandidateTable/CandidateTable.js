@@ -122,9 +122,15 @@ class CandidateTable extends Component {
     const sortDirection = direction === "desc" ? "asc" : "desc";
 
     // Sort collection
+    let collectionToSort = null;
+    if (typeof this.state.filteredCollection === "undefined") {
+      collectionToSort = this.props.candidates;
+    } else if (this.state.filteredCollection.length >= 1) {
+      collectionToSort = this.state.filteredCollection;
+    }
 
     const sortedData = orderBy(
-      this.props.candidates,
+      collectionToSort,
 
       [sortKey],
 
@@ -153,7 +159,7 @@ class CandidateTable extends Component {
 
     //   // Sort collection
 
-    const filteredCollection = filter(this.props.candidates, [
+    const filteredCollectionData = filter(this.props.candidates, [
       filterKey,
       filterValue
     ]);
@@ -161,7 +167,7 @@ class CandidateTable extends Component {
     //   //Update component state with new data
 
     this.setState({
-      collection: filteredCollection
+      filteredCollection: filteredCollectionData
     });
   };
 
@@ -183,6 +189,9 @@ class CandidateTable extends Component {
         </button>
         <button onClick={() => this.handleFilterClick("status", "approved")}>
           Sort By status: APROVED
+        </button>
+        <button onClick={() => this.handleFilterClick(null, null)}>
+          Sort By status: Default
         </button>
 
         <div className={classes.Candidates__wrapper}>
