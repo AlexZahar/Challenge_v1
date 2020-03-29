@@ -163,7 +163,8 @@ class CandidateTable extends Component {
       }
     });
   }
-  handleFilterClick = filterValue => {
+
+  handleFilterClick = (filterKey, filterValue) => {
     const { collection } = this.state;
     // let filteredByStatus = filter(collection, { status: "waiting" });
     // console.log(filteredByStatus);
@@ -173,7 +174,10 @@ class CandidateTable extends Component {
 
     //   // Sort collection
 
-    const filteredCollection = filter(this.props.candidates, filterValue);
+    const filteredCollection = filter(this.props.candidates, [
+      filterKey,
+      filterValue
+    ]);
 
     //   //Update component state with new data
 
@@ -252,7 +256,13 @@ class CandidateTable extends Component {
     ) : this.props.candidates.length >= 1 ? (
       <Aux>
         <button>Refresh Table</button>
-        <button onClick={() => this.handleFilterClick("waiting")}>
+        <button onClick={() => this.handleFilterClick("status", "waiting")}>
+          Sort By status: WAITING
+        </button>
+        <button onClick={() => this.handleFilterClick("status", "rejected")}>
+          Sort By status: REJECTED
+        </button>
+        <button onClick={() => this.handleFilterClick("status", "approved")}>
           Sort By status: APROVED
         </button>
 
