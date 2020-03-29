@@ -58,8 +58,9 @@ class CandidateTable extends Component {
       //     status: "waiting"
       //   }
       // ],
-      sortedCollection: this.props.candidates,
+      sortedCollection: [],
       undefinedDataRefreshBtn: false,
+      filteredCollection: [],
       sortParams: {
         direction: undefined
       }
@@ -72,11 +73,17 @@ class CandidateTable extends Component {
   renderTableData() {
     let currentYear = new Date().getFullYear();
     let tableData = null;
-    if (this.state.sortedCollection.length > 1) {
-      tableData = this.state.sortedCollection;
-    } else if (this.props.candidates.length) {
+
+    if (this.state.sortedCollection.length < 1) {
       tableData = this.props.candidates;
+    } else if (this.state.filteredCollection.length >= 1) {
+      tableData = this.state.sortedCollection;
+    } else if (this.state.sortedCollection.length >= 1) {
+      tableData = this.state.sortedCollection;
     }
+    //  else if (this.state.filteredCollection.length >= 1) {
+    //   tableData = this.state.filteredCollection;
+    // }
 
     return tableData.map((candidate, index) => {
       const {
@@ -122,11 +129,11 @@ class CandidateTable extends Component {
     const sortDirection = direction === "desc" ? "asc" : "desc";
 
     // Sort collection
-    let collectionToSort = null;
-    if (typeof this.state.filteredCollection === "undefined") {
-      collectionToSort = this.props.candidates;
-    } else if (this.state.filteredCollection.length >= 1) {
+    let collectionToSort;
+    if (this.state.filteredCollection.length >= 1) {
       collectionToSort = this.state.filteredCollection;
+    } else if (typeof this.state.filteredCollection === "undefined") {
+      collectionToSort = this.props.candidates;
     }
 
     const sortedData = orderBy(
@@ -167,6 +174,7 @@ class CandidateTable extends Component {
     //   //Update component state with new data
 
     this.setState({
+      sortedCollection: filteredCollectionData,
       filteredCollection: filteredCollectionData
     });
   };
@@ -189,6 +197,13 @@ class CandidateTable extends Component {
         </button>
         <button onClick={() => this.handleFilterClick("status", "approved")}>
           Sort By status: APROVED
+        </button>
+        <button
+          onClick={() =>
+            this.handleFilterClick("position_applied", "Administrator")
+          }
+        >
+          Sort By status: Administrator
         </button>
         <button onClick={() => this.handleFilterClick(null, null)}>
           Sort By status: Default
