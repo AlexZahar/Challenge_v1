@@ -137,7 +137,35 @@ class CandidateTable extends Component {
       sortedCollection: filteredCollectionData
     });
   };
+  formSelectorFilter = () => {
+    return (
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel htmlFor="filter-status">Search for</InputLabel>
+        <Select
+          native
+          value={this.state.columnToQuerry}
+          onChange={event => {
+            this.setState({
+              columnToQuerry: event.target.value
+            });
+          }}
+          label="Search for"
+          inputProps={{
+            name: "",
+            id: "outlined-age-native-simple"
+          }}
+        >
+          <option aria-label="None" value="Default">
+            Default
+          </option>
 
+          <option value="name">Name</option>
+          <option value="position_applied">Position Applied</option>
+          <option value="status">Status</option>
+        </Select>
+      </FormControl>
+    );
+  };
   searchBar = () => {
     if (this.state.columnToQuerry !== "Default") {
       return (
@@ -168,32 +196,7 @@ class CandidateTable extends Component {
       <Modal />
     ) : this.props.candidates.length >= 1 ? (
       <Aux>
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel htmlFor="filter-status">Search for</InputLabel>
-          <Select
-            native
-            value={this.state.columnToQuerry}
-            onChange={event => {
-              this.setState({
-                columnToQuerry: event.target.value
-              });
-            }}
-            label="Search for"
-            inputProps={{
-              name: "",
-              id: "outlined-age-native-simple"
-            }}
-          >
-            <option aria-label="None" value="Default">
-              Default
-            </option>
-
-            <option value="name">Name</option>
-            <option value="position_applied">Position Applied</option>
-            <option value="status">Status</option>
-          </Select>
-        </FormControl>
-
+        {this.formSelectorFilter()}
         {this.searchBar()}
 
         <div className={classes.Candidates__wrapper}>
