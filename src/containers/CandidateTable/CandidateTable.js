@@ -7,7 +7,7 @@ import axios from "../../axios-config";
 import PropTypes from "prop-types";
 import Spinner from "../../components/Spinner/Spinner";
 import { orderBy, filter } from "lodash";
-import * as actionTypes from "../../store/reducers/actions/actionTypes";
+// import * as actionTypes from "../../store/reducers/actions/actionTypes";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionCreators from "../../store/reducers/actions/actionCreators";
 
@@ -76,8 +76,6 @@ class CandidateTable extends Component {
 
     if (this.state.sortedCollection.length < 1) {
       tableData = this.props.candidates;
-    } else if (this.state.filteredCollection.length >= 1) {
-      tableData = this.state.sortedCollection;
     } else if (this.state.sortedCollection.length >= 1) {
       tableData = this.state.sortedCollection;
     }
@@ -130,12 +128,13 @@ class CandidateTable extends Component {
 
     // Sort collection
     let collectionToSort;
-    if (this.state.filteredCollection.length >= 1) {
-      collectionToSort = this.state.filteredCollection;
-    } else if (typeof this.state.filteredCollection === "undefined") {
+    if (this.state.filteredCollection.length < 1) {
       collectionToSort = this.props.candidates;
+    } else if (this.state.filteredCollection.length >= 1) {
+      collectionToSort = this.state.filteredCollection;
     }
 
+    console.log(sortKey);
     const sortedData = orderBy(
       collectionToSort,
 
@@ -148,7 +147,6 @@ class CandidateTable extends Component {
 
     this.setState({
       sortedCollection: sortedData,
-
       sortParams: {
         direction: sortDirection
       }
@@ -157,7 +155,7 @@ class CandidateTable extends Component {
   // ----------------------------------------------------------------------------
 
   handleFilterClick = (filterKey, filterValue) => {
-    const { sortedCollection } = this.state;
+    // const { sortedCollection } = this.state;
     // let filteredByStatus = filter(collection, { status: "waiting" });
     // console.log(filteredByStatus);
     //   // Check, what direction now should be
@@ -174,8 +172,8 @@ class CandidateTable extends Component {
     //   //Update component state with new data
 
     this.setState({
-      sortedCollection: filteredCollectionData,
-      filteredCollection: filteredCollectionData
+      filteredCollection: filteredCollectionData,
+      sortedCollection: filteredCollectionData
     });
   };
 
@@ -185,7 +183,7 @@ class CandidateTable extends Component {
   // ---------------------------------------------------------------------------------
   render() {
     return typeof this.props.candidates === "undefined" ? (
-      <button onClick={this.onRefreshTable}>REFRESH TABLE</button>
+      <Modal />
     ) : this.props.candidates.length >= 1 ? (
       <Aux>
         <button>Refresh Table</button>
