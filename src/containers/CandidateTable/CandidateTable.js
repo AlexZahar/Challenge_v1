@@ -10,60 +10,25 @@ import { orderBy, filter } from "lodash";
 // import * as actionTypes from "../../store/reducers/actions/actionTypes";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionCreators from "../../store/reducers/actions/actionCreators";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 class CandidateTable extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // users: [
-      //   {
-      //     id: 2,
-      //     name: "Colette Morar",
-      //     email: "corinnestark@pacocha.co",
-      //     birth_date: "1998-08-03",
-      //     year_of_experience: 3,
-      //     position_applied: "backend",
-      //     application_date: "2017-11-18",
-      //     status: "rejected"
-      //   },
-      //   {
-      //     id: 1,
-      //     name: "Bishop",
-      //     email: "corinnestark@pacocha.co",
-      //     birth_date: "1998-08-03",
-      //     year_of_experience: 3,
-      //     position_applied: "frontend",
-      //     application_date: "2017-11-18",
-      //     status: "aproved"
-      //   },
-      //   {
-      //     id: 5,
-      //     name: "Janette",
-      //     email: "corinnestark@pacocha.co",
-      //     birth_date: "1998-08-03",
-      //     year_of_experience: 3,
-      //     position_applied: "Designer",
-      //     application_date: "2017-11-18",
-      //     status: "waiting"
-      //   },
-      //   {
-      //     id: 3,
-      //     name: "BAMBOLEO",
-      //     email: "corinnestark@pacocha.co",
-      //     birth_date: "1998-08-03",
-      //     year_of_experience: 3,
-      //     position_applied: "Designer",
-      //     application_date: "2017-11-18",
-      //     status: "waiting"
-      //   }
-      // ],
       sortedCollection: [],
       undefinedDataRefreshBtn: false,
       filteredCollection: [],
       sortParams: {
         direction: undefined
-      }
+      },
+      querry: "",
+      columnToQuerry: "status"
     };
   }
   componentDidMount() {
@@ -119,6 +84,7 @@ class CandidateTable extends Component {
   // ------------------------------------------------------------------------
   handleSortColumnHeaderClick(sortKey) {
     const {
+      querry,
       sortParams: { direction }
     } = this.state;
 
@@ -185,7 +151,36 @@ class CandidateTable extends Component {
       <Modal />
     ) : this.props.candidates.length >= 1 ? (
       <Aux>
-        <button>Refresh Table</button>
+        <TextField
+          id="outlined-search"
+          label="Querry"
+          type="search"
+          value={this.state.querry}
+          variant="outlined"
+          onChange={e => this.setState({ querry: e.target.value })}
+        />
+
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel htmlFor="filter-status">Search for</InputLabel>
+          <Select
+            native
+            value={this.state.columnToQuerry}
+            onChange={(event, index, value) => {
+              this.setState({ columnToQuerry: value });
+            }}
+            label="input"
+            inputProps={{
+              name: "",
+              id: "outlined-age-native-simple"
+            }}
+          >
+            <option aria-label="None" value="" />
+            <option value="name">Name</option>
+            <option value="position_applied">Position Applied</option>
+            <option value="status">Status</option>
+          </Select>
+        </FormControl>
+        {/* <button>Refresh Table</button>
         <button onClick={() => this.handleFilterClick("status", "waiting")}>
           Sort By status: WAITING
         </button>
@@ -204,7 +199,7 @@ class CandidateTable extends Component {
         </button>
         <button onClick={() => this.handleFilterClick(null, null)}>
           Sort By status: Default
-        </button>
+        </button> */}
 
         <div className={classes.Candidates__wrapper}>
           <table className={classes.Candidates}>

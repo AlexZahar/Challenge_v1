@@ -44,7 +44,7 @@ export default function NativeSelects() {
             id: "outlined-age-native-simple"
           }}
         >
-          <option aria-label="Status" value="none" />
+          <option aria-label="" value="none" />
           <option value={"approved"}>Approved</option>
           <option value={"waiting"}>Waiting</option>
           <option value={"rejected"}>Rejected</option>
@@ -53,3 +53,46 @@ export default function NativeSelects() {
     </div>
   );
 }
+
+// users: [
+//   {
+//     id: 2,
+//     name: "Colette Morar",
+//     email: "corinnestark@pacocha.co",
+//     birth_date: "1998-08-03",
+//     year_of_experience: 3,
+//     position_applied: "backend",
+//     application_date: "2017-11-18",
+//     status: "rejected"
+//   },
+//   {
+//     id: 1,
+//     name: "Bishop",
+//     email: "corinnestark@pacocha.co",
+//     birth_date: "1998-08-03",
+//     year_of_experience: 3,
+//     position_applied: "frontend",
+//     application_date: "2017-11-18",
+//     status: "aproved"
+//   },
+//   {
+//     id: 5,
+//     name: "Janette",
+//     email: "corinnestark@pacocha.co",
+//     birth_date: "1998-08-03",
+//     year_of_experience: 3,
+//     position_applied: "Designer",
+//     application_date: "2017-11-18",
+//     status: "waiting"
+//   },
+//   {
+//     id: 3,
+//     name: "BAMBOLEO",
+//     email: "corinnestark@pacocha.co",
+//     birth_date: "1998-08-03",
+//     year_of_experience: 3,
+//     position_applied: "Designer",
+//     application_date: "2017-11-18",
+//     status: "waiting"
+//   }
+// ],
