@@ -41,15 +41,14 @@ class CandidateTable extends Component {
     let lowerCaseQuerry = this.state.querry.toLowerCase();
 
     if (this.state.querry && this.state.columnToQuerry !== "Default") {
-      let filtered = this.props.candidates.filter(x =>
+      let filteredData = this.props.candidates.filter(x =>
         x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
       );
-
-      tableData = filtered;
+      tableData = filteredData;
+    } else if (this.state.sortedCollection.length >= 1) {
+      tableData = this.state.sortedCollection;
     } else if (this.state.sortedCollection.length < 1) {
       tableData = this.props.candidates;
-    } else if ((this.state.sortedCollection.length >= 1) | this.state.querry) {
-      tableData = this.state.sortedCollection;
     }
 
     return tableData.map((candidate, index) => {
@@ -97,12 +96,18 @@ class CandidateTable extends Component {
 
     const sortDirection = direction === "desc" ? "asc" : "desc";
 
+    let lowerCaseQuerry = this.state.querry.toLowerCase();
+
     // Sort collection
     let collectionToSort;
-    if (this.state.filteredCollection.length < 1) {
+    let filteredCollection;
+    if (this.state.querry && this.state.columnToQuerry !== "Default") {
+      filteredCollection = this.props.candidates.filter(x =>
+        x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
+      );
+      collectionToSort = filteredCollection;
+    } else if (this.state.filteredCollection.length < 1) {
       collectionToSort = this.props.candidates;
-    } else if (this.state.filteredCollection.length >= 1) {
-      collectionToSort = this.state.filteredCollection;
     }
 
     const sortedData = orderBy(
