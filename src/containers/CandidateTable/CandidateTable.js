@@ -29,7 +29,7 @@ class CandidateTable extends Component {
       },
       querry: "",
       isListFiltered: false,
-      columnToQuerry: "status"
+      columnToQuerry: "name"
     };
   }
   componentDidMount() {
