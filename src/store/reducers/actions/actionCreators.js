@@ -2,20 +2,13 @@ import * as actionTypes from "./actionTypes";
 import axios from "../../../axios-config";
 import _ from "lodash";
 
-export const renderTableData = sortedCandidatesByName => {
+export const handleDataUndefined = isUndefined => {
   return {
-    type: actionTypes.RENDER_TABLE_DATA,
-    candidates: sortedCandidatesByName
+    type: actionTypes.DATA_UNDEFINED,
+    isDataUndefined: isUndefined
   };
 };
 
-export const onRenderTableData = () => {
-  return dispatch => {
-    console.log("pulaaa");
-    const sortedOBJ = _.sortBy(this.props.candidates, ["name"]);
-    dispatch(renderTableData());
-  };
-};
 // ----------------------------------------------
 
 export const fetchCandidatesSuccess = candidates => {
@@ -45,10 +38,10 @@ export const fetchCandidates = () => {
       .get("/candidates")
       .then(res => {
         let { data } = res.data;
-        // if (typeof data === "undefined") {
-        //   console.log("this is undefineeeeeeed in actions");
-        // } else
-        dispatch(fetchCandidatesSuccess(data));
+        if (typeof data === "undefined") {
+          console.log("this is undefineeeeeeed in actions");
+          dispatch(handleDataUndefined());
+        } else dispatch(fetchCandidatesSuccess(data));
       })
       .catch(err => {
         console.log(err.response);

@@ -205,8 +205,9 @@ class CandidateTable extends Component {
     //     x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
     //   );
     // }
-    return typeof this.props.candidates === "undefined" ? (
-      <Modal />
+    console.log("from the table c", this.props.isDataUndefined);
+    return this.props.isDataUndefined ? (
+      <button>saaaa</button>
     ) : this.props.candidates.length >= 1 ? (
       <Aux>
         <div className={classes.Candidates__wrapper}>
@@ -257,14 +258,15 @@ const mapStateToProps = state => {
   return {
     candidates: state.candidates,
     loadingCandidates: state.loading,
-    isShowTable: state.showTable
+    isShowTable: state.showTable,
+    isDataUndefined: state.isDataUndefined
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onFetchCandidates: () => dispatch(actionCreators.fetchCandidates()),
-    onRenderTableData: () => dispatch(actionCreators.onRenderTableData())
+    onDataUndefined: () => dispatch(actionCreators.handleDataUndefined())
   };
 };
 

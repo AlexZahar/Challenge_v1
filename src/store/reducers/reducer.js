@@ -6,11 +6,14 @@ const initialState = {
   isShowTable: false,
   loading: false,
   error: false,
-  tabelData: false
+  tabelData: false,
+  isDataUndefined: false
 };
 
-const renderTableData = (state, action) => {
-  return updateObject(state, { isShowTable: true });
+const setDataUndefined = (state, action) => {
+  console.log("this is the reducer", state.isDataUndefined);
+
+  return updateObject(state, { isDataUndefined: true });
 };
 // ---------------------------------------
 const fetchCanditatesStart = (state, action) => {
@@ -38,8 +41,8 @@ const reducer = (state = initialState, action) => {
       return fetchCandidatesSuccess(state, action);
     case actionTypes.FETCH_CANDIDATES_FAILED:
       return fetchCandidatesFailed(state, action);
-    case actionTypes.RENDER_TABLE_DATA:
-      return renderTableData(state, action);
+    case actionTypes.DATA_UNDEFINED:
+      return setDataUndefined(state, action);
     default:
       return state;
   }
