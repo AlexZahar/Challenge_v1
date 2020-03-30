@@ -61,7 +61,11 @@
   /* background-color: #b4f1fca9; */
   cursor: pointer;
 }
-
+.Errorhandling__wrapper {
+  margin-top: 25vh;
+  width: 100%;
+  text-align: center;
+}
 .Candidates th {
   padding-top: 12px;
   padding-bottom: 12px;

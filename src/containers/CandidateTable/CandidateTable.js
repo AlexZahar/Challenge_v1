@@ -12,6 +12,7 @@ import { orderBy, filter } from "lodash";
 // import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionCreators from "../../store/reducers/actions/actionCreators";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 // import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -209,10 +210,17 @@ class CandidateTable extends Component {
     // }
     console.log("from the table c", this.props.isDataUndefined);
     return this.props.isDataUndefined ? (
-      <div className={classes.Filter__wrapper}>
+      <div className={classes.Errorhandling__wrapper}>
         {" "}
         <h3>Ouups.. Something went wrong</h3>
-        <button onClick={this.onRefreshTable}>Refresh Table</button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.onRefreshTable}
+        >
+          {" "}
+          Refresh Table
+        </Button>
       </div>
     ) : this.props.candidates.length >= 1 ? (
       <Aux>
