@@ -209,10 +209,9 @@ class CandidateTable extends Component {
       <Modal />
     ) : this.props.candidates.length >= 1 ? (
       <Aux>
-        {this.formSelectorFilter()}
-        {this.searchBar()}
-
         <div className={classes.Candidates__wrapper}>
+          {this.formSelectorFilter()}
+          {this.searchBar()}
           <table className={classes.Candidates}>
             <thead>
               <tr>
