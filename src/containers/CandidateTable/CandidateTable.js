@@ -2,16 +2,17 @@ import React, { Component, Fragment } from "react";
 import classes from "./CandidateTable.module.css";
 import Aux from "../../hoc/Aux";
 import { connect } from "react-redux";
-import Modal from "../../components/Modal/Modal";
-import axios from "../../axios-config";
+import { makeStyles } from "@material-ui/core/styles";
+// import Modal from "../../components/Modal/Modal";
+// import axios from "../../axios-config";
 import PropTypes from "prop-types";
 import Spinner from "../../components/Spinner/Spinner";
 import { orderBy, filter } from "lodash";
 // import * as actionTypes from "../../store/reducers/actions/actionTypes";
-import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+// import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionCreators from "../../store/reducers/actions/actionCreators";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -97,7 +98,7 @@ class CandidateTable extends Component {
   // ---------------------------------------------------------------------------
   onRefreshTable = () => {
     this.props.onFetchCandidates();
-    this.setState({ undefinedDataRefreshBtn: false });
+    // this.setState({ undefinedDataRefreshBtn: false });
   };
   // ------------------------------------------------------------------------
   handleSortColumnHeaderClick(sortKey) {
@@ -183,6 +184,7 @@ class CandidateTable extends Component {
     if (this.state.columnToQuerry !== "Default") {
       return (
         <TextField
+          className={classes.Querry__input}
           id="outlined-search"
           label="Querry"
           type="search"
@@ -207,12 +209,22 @@ class CandidateTable extends Component {
     // }
     console.log("from the table c", this.props.isDataUndefined);
     return this.props.isDataUndefined ? (
-      <button>saaaa</button>
+      <div className={classes.Filter__wrapper}>
+        {" "}
+        <h3>Ouups.. Something went wrong</h3>
+        <button onClick={this.onRefreshTable}>Refresh Table</button>
+      </div>
     ) : this.props.candidates.length >= 1 ? (
       <Aux>
         <div className={classes.Candidates__wrapper}>
-          {this.formSelectorFilter()}
-          {this.searchBar()}
+          <div className={classes.Table__nav}>
+            <h2>Welcome to Personio candidate list</h2>
+
+            <div className={classes.Querry__wrapper}>
+              {this.formSelectorFilter()}
+              {this.searchBar()}
+            </div>
+          </div>
           <table className={classes.Candidates}>
             <thead>
               <tr>
@@ -282,7 +294,4 @@ CandidateTable.propTypes = {
   status: PropTypes.oneOf(["approved", "rejected", "waiting"])
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withErrorHandler(CandidateTable, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(CandidateTable);

@@ -17,14 +17,15 @@ const setDataUndefined = (state, action) => {
 };
 // ---------------------------------------
 const fetchCanditatesStart = (state, action) => {
-  return updateObject(state, { loading: true });
+  return updateObject(state, { loading: true, isDataUndefined: false });
 };
 
 const fetchCandidatesSuccess = (state, action) => {
   console.log("REDUCER", action.candidates);
   return updateObject(state, {
     candidates: action.candidates,
-    loading: false
+    loading: false,
+    isDataUndefined: false
   });
 };
 
