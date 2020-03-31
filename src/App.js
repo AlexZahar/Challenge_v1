@@ -29,7 +29,11 @@ class App extends Component {
                 <Route path="/candidates" exact component={CandidateTable} />
                 <Route path="/" exact component={Home} />
                 {/* <Redirect from="/" to="/candidates" /> */}
-                <Route render={() => <h1>not found</h1>}></Route>
+                <Route
+                  render={() => (
+                    <h1>Sorry, the requested page was not found</h1>
+                  )}
+                ></Route>
               </Switch>
               {/* <Route path="/candidates/" component={CandidateTable} /> */}
             </section>
