@@ -65,10 +65,10 @@ class CandidateTable extends Component {
       tableData = filteredData;
     } else if (this.state.sortedCollection.length > 1) {
       let querry;
-      if (!this.props.match.params.querry) {
-        querry = this.state.querry;
-      } else {
+      if (this.props.match.params.querry) {
         querry = this.props.match.params.querry;
+      } else if (!this.props.match.params.querry) {
+        querry = this.state.querry;
       }
       let filteredData = this.state.sortedCollection.filter(x =>
         x[this.state.columnToQuerry]
@@ -232,7 +232,7 @@ class CandidateTable extends Component {
           variant="outlined"
           onChange={e => {
             // this.props.history.push({
-            //   pathname: "/candidates/querry/" + this.state.querry
+            //   pathname: "candidates/querry/" + this.state.querry
             // });
             this.setState({ querry: e.target.value });
           }}
