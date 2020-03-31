@@ -28,8 +28,12 @@ class App extends Component {
                   path={"/candidates/querry/:querry/sort/:order"}
                   component={CandidateTable}
                 /> */}
-                <Route
+                {/* <Route
                   path={"/candidates/querry/:querry"}
+                  component={CandidateTable}
+                /> */}
+                <Route
+                  path={"/candidates/querry/:querry/column/:name"}
                   component={CandidateTable}
                 />
                 {/* <Redirect from="/" to="/candidates" /> */}

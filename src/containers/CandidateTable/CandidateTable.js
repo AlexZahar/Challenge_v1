@@ -251,12 +251,21 @@ class CandidateTable extends Component {
   render() {
     console.log(this.props);
     let querryRoute = null;
+    let columnName = null;
 
     if (this.state.querry) {
       querryRoute = "/candidates/querry/";
+      columnName = "/column/" + this.state.columnToQuerry;
     } else {
       querryRoute = "/candidates/";
+      columnName = "";
     }
+
+    // if (this.state.columnToQuerry) {
+    //   columnName = `/column/  ${+this.state.columnToQuerry}`;
+    // } else if(!this.state.querry){
+    //   columnName = "";
+    // }
     // let lowerCaseQuerry = this.state.querry.toLowerCase();
     // if (this.state.querry) {
     //   this.props.candidates.filter(x =>
@@ -287,7 +296,7 @@ class CandidateTable extends Component {
               {this.formSelectorFilter()}
               {this.searchBar()}
               <Link
-                to={querryRoute + this.state.querry}
+                to={querryRoute + this.state.querry + columnName}
                 onClick={this.changeSortedCandidatesState}
               >
                 <Button variant="contained" color="primary">
