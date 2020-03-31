@@ -8,6 +8,7 @@ import axios from "../../axios-config";
 import PropTypes from "prop-types";
 import Spinner from "../../components/Spinner/Spinner";
 import { orderBy } from "lodash";
+import { Link } from "react-router-dom";
 // import * as actionTypes from "../../store/reducers/actions/actionTypes";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionCreators from "../../store/reducers/actions/actionCreators";
@@ -41,31 +42,49 @@ class CandidateTable extends Component {
   renderTableData() {
     let currentYear = new Date().getFullYear();
     let tableData = null;
-    let lowerCaseQuerry = this.state.querry.toLowerCase();
-    // this.state.columnToQuerry !== "Default"
-    // if (this.state.querry && this.state.sortedCollection.length <= 1) {
-    // let filteredData = this.props.candidates.filter(x =>
-    //   x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
-    // );
-    // tableData = filteredData;
-    // } else if (this.state.querry && this.state.sortedCollection > 1) {
-    //   tableData = this.state.sortedCollection;
-    // } else if (this.state.sortedCollection.length >= 1) {
-    //   tableData = this.state.sortedCollection;
-    // } else {
-    //   tableData = this.props.candidates;
+    // let lowerCaseQuerry = this.state.querry.toLowerCase();
 
-    if (this.state.querry && this.state.sortedCollection.length <= 1) {
+    // if (this.props.match.params.querry && this.columnToQuerry !== "Default") {
+    //   let filteredData = this.props.candidates.filter(x =>
+    //     x[this.state.columnToQuerry]
+    //       .toLowerCase()
+    //       .includes(this.props.match.params.querry.toLowerCase())
+    //   );
+    //   tableData = filteredData;
+    // }
+    // && this.columnToQuerry !== "Default"
+    if (
+      this.props.match.params.querry &&
+      this.state.sortedCollection.length <= 1
+    ) {
       let filteredData = this.props.candidates.filter(x =>
-        x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
+        x[this.state.columnToQuerry]
+          .toLowerCase()
+          .includes(this.props.match.params.querry.toLowerCase())
       );
       tableData = filteredData;
     } else if (this.state.sortedCollection.length > 1) {
       let filteredData = this.state.sortedCollection.filter(x =>
-        x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
+        x[this.state.columnToQuerry]
+          .toLowerCase()
+          .includes(this.props.match.params.querry.toLowerCase())
       );
       tableData = filteredData;
-    } else {
+    }
+
+    // if (this.state.querry && this.state.sortedCollection.length <= 1) {
+    //   let filteredData = this.props.candidates.filter(x =>
+    //     x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
+    //   );
+    //   tableData = filteredData;
+    // }
+    //  else if (this.state.sortedCollection.length > 1) {
+    //   let filteredData = this.state.sortedCollection.filter(x =>
+    //     x[this.state.columnToQuerry].toLowerCase().includes(lowerCaseQuerry)
+    //   );
+    //   tableData = filteredData;
+    // }
+    else {
       tableData = this.props.candidates;
     }
     return tableData.map((candidate, index) => {
@@ -119,7 +138,6 @@ class CandidateTable extends Component {
     } else {
       collectionToSort = this.state.sortedCollection;
     }
-
     const sortedData = orderBy(
       collectionToSort,
 
@@ -136,6 +154,20 @@ class CandidateTable extends Component {
         direction: sortDirection
       }
     });
+    if (this.props.match.params.querry) {
+      this.props.history.push({
+        pathname:
+          "/candidates/querry/" +
+          this.state.querry +
+          "/sort/" +
+          this.state.sortParams.direction
+      });
+    }
+    //  else if (this.state.querry) {
+    //   this.props.history.push({
+    //     pathname: "/candidates/sort/" + this.state.sortParams.direction
+    //   });
+    // }
   }
   // ----------------------------------------------------------------------------
 
@@ -175,6 +207,7 @@ class CandidateTable extends Component {
           </option>
 
           <option value="name">Name</option>
+
           <option value="position_applied">Position Applied</option>
           <option value="status">Status</option>
         </Select>
@@ -191,7 +224,12 @@ class CandidateTable extends Component {
           type="search"
           value={this.state.querry}
           variant="outlined"
-          onChange={e => this.setState({ querry: e.target.value })}
+          onChange={e => {
+            // this.props.history.push({
+            //   pathname: "/candidates/querry/" + this.state.querry
+            // });
+            this.setState({ querry: e.target.value });
+          }}
         />
       );
     }
@@ -202,6 +240,7 @@ class CandidateTable extends Component {
   // };
   // ---------------------------------------------------------------------------------
   render() {
+    console.log(this.props);
     // let lowerCaseQuerry = this.state.querry.toLowerCase();
     // if (this.state.querry) {
     //   this.props.candidates.filter(x =>
@@ -231,6 +270,11 @@ class CandidateTable extends Component {
             <div className={classes.Querry__wrapper}>
               {this.formSelectorFilter()}
               {this.searchBar()}
+              <Link to={"/candidates/querry/" + this.state.querry + "/sort"}>
+                <Button variant="contained" color="primary">
+                  Search
+                </Button>
+              </Link>
             </div>
           </div>
           <table className={classes.Candidates}>
@@ -240,6 +284,7 @@ class CandidateTable extends Component {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Age</th>
+
                 <th
                   onClick={() =>
                     this.handleSortColumnHeaderClick("year_of_experience")
@@ -247,6 +292,7 @@ class CandidateTable extends Component {
                 >
                   Years of Experience
                 </th>
+
                 <th
                   onClick={() =>
                     this.handleSortColumnHeaderClick("position_applied")
