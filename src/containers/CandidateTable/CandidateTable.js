@@ -4,12 +4,12 @@ import Aux from "../../hoc/Aux";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 // import Modal from "../../components/Modal/Modal";
-// import axios from "../../axios-config";
+import axios from "../../axios-config";
 import PropTypes from "prop-types";
 import Spinner from "../../components/Spinner/Spinner";
-import { orderBy, filter } from "lodash";
+import { orderBy } from "lodash";
 // import * as actionTypes from "../../store/reducers/actions/actionTypes";
-// import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionCreators from "../../store/reducers/actions/actionCreators";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -302,4 +302,7 @@ CandidateTable.propTypes = {
   status: PropTypes.oneOf(["approved", "rejected", "waiting"])
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CandidateTable);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(CandidateTable, axios));

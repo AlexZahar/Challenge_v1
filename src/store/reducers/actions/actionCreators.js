@@ -1,6 +1,5 @@
 import * as actionTypes from "./actionTypes";
 import axios from "../../../axios-config";
-import _ from "lodash";
 
 export const handleDataUndefined = isUndefined => {
   return {

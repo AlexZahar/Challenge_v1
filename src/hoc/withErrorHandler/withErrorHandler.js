@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-
-import Modal from "../../components/Modal/Modal";
+import Button from "@material-ui/core/Button";
 import Aux from "../Aux";
+import classes from "./withErrorHandler.module.css";
 
 const withErrorHandler = (WrappedComponent, axios) => {
   return class extends Component {
@@ -27,7 +27,10 @@ const withErrorHandler = (WrappedComponent, axios) => {
       axios.interceptors.request.eject(this.reqInterceptor);
       axios.interceptors.response.eject(this.resInterceptor);
     }
-
+    onRefreshTable = () => {
+      this.props.onFetchCandidates();
+      // this.setState({ undefinedDataRefreshBtn: false });
+    };
     errorConfirmedHandler = () => {
       this.setState({ error: null });
     };
@@ -36,12 +39,22 @@ const withErrorHandler = (WrappedComponent, axios) => {
       this.setInterceptors();
       return (
         <Aux>
-          <div show={this.state.error} modalClosed={this.errorConfirmedHandler}>
+          <div show={this.state.error} className={classes.Error__wrapper}>
             {this.state.error ? (
-              this.state.error.message
-            ) : (
-              <button>WTFFFFFF</button>
-            )}
+              <div>
+                <h3>
+                  {this.state.error.message} <br /> The requested page has not
+                  been found
+                </h3>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.onRefreshTable}
+                >
+                  Refresh Table
+                </Button>
+              </div>
+            ) : null}
           </div>
           <WrappedComponent {...this.props} />
         </Aux>
