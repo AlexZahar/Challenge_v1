@@ -24,10 +24,10 @@ class App extends Component {
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/candidates" exact component={CandidateTable} />
-                <Route
+                {/* <Route
                   path={"/candidates/querry/:querry/sort/:order"}
                   component={CandidateTable}
-                />
+                /> */}
                 <Route
                   path={"/candidates/querry/:querry"}
                   component={CandidateTable}

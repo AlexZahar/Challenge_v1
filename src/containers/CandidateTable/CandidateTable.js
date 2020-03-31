@@ -64,10 +64,16 @@ class CandidateTable extends Component {
       );
       tableData = filteredData;
     } else if (this.state.sortedCollection.length > 1) {
+      let querry;
+      if (!this.props.match.params.querry) {
+        querry = this.state.querry;
+      } else {
+        querry = this.props.match.params.querry;
+      }
       let filteredData = this.state.sortedCollection.filter(x =>
         x[this.state.columnToQuerry]
           .toLowerCase()
-          .includes(this.props.match.params.querry.toLowerCase())
+          .includes(querry.toLowerCase())
       );
       tableData = filteredData;
     }
@@ -154,15 +160,15 @@ class CandidateTable extends Component {
         direction: sortDirection
       }
     });
-    if (this.props.match.params.querry) {
-      this.props.history.push({
-        pathname:
-          "/candidates/querry/" +
-          this.state.querry +
-          "/sort/" +
-          this.state.sortParams.direction
-      });
-    }
+    // if (this.props.match.params.querry) {
+    //   this.props.history.push({
+    //     pathname:
+    //       "/candidates/querry/" +
+    //       this.state.querry +
+    //       "/sort/" +
+    //       this.state.sortParams.direction
+    //   });
+    // }
     //  else if (this.state.querry) {
     //   this.props.history.push({
     //     pathname: "/candidates/sort/" + this.state.sortParams.direction
@@ -270,7 +276,7 @@ class CandidateTable extends Component {
             <div className={classes.Querry__wrapper}>
               {this.formSelectorFilter()}
               {this.searchBar()}
-              <Link to={"/candidates/querry/" + this.state.querry + "/sort"}>
+              <Link to={"/candidates/querry/" + this.state.querry}>
                 <Button variant="contained" color="primary">
                   Search
                 </Button>
