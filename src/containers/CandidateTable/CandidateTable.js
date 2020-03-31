@@ -241,6 +241,9 @@ class CandidateTable extends Component {
     }
   };
 
+  changeSortedCandidatesState = () => {
+    this.setState({ sortedCollection: [] });
+  };
   // checkCandidateList = () => {
   //   this.setState({ collection: this.props.candidates });
   // };
@@ -276,7 +279,10 @@ class CandidateTable extends Component {
             <div className={classes.Querry__wrapper}>
               {this.formSelectorFilter()}
               {this.searchBar()}
-              <Link to={"/candidates/querry/" + this.state.querry}>
+              <Link
+                to={"/candidates/querry/" + this.state.querry}
+                onClick={this.changeSortedCandidatesState}
+              >
                 <Button variant="contained" color="primary">
                   Search
                 </Button>
