@@ -250,6 +250,13 @@ class CandidateTable extends Component {
   // ---------------------------------------------------------------------------------
   render() {
     console.log(this.props);
+    let querryRoute = null;
+
+    if (this.state.querry) {
+      querryRoute = "/candidates/querry/";
+    } else {
+      querryRoute = "/candidates/";
+    }
     // let lowerCaseQuerry = this.state.querry.toLowerCase();
     // if (this.state.querry) {
     //   this.props.candidates.filter(x =>
@@ -280,7 +287,7 @@ class CandidateTable extends Component {
               {this.formSelectorFilter()}
               {this.searchBar()}
               <Link
-                to={"/candidates/querry/" + this.state.querry}
+                to={querryRoute + this.state.querry}
                 onClick={this.changeSortedCandidatesState}
               >
                 <Button variant="contained" color="primary">
