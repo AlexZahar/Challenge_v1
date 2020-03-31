@@ -1,6 +1,6 @@
 .Navigation {
   display: flex;
-  background-color: #73daf5;
+  /* background-color: #73daf5; */
   height: 4em;
   flex-direction: row;
   justify-content: space-between;
@@ -13,4 +13,10 @@
 
 .Navigation button {
   padding-right: 3em;
+}
+
+.Navigation__logo {
+  margin-top: 16px;
+  margin-left: 30px;
+  height: 36px;
 }

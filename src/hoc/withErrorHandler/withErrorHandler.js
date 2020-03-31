@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import Aux from "../Aux";
+import { Link } from "react-router-dom";
 import classes from "./withErrorHandler.module.css";
 
 const withErrorHandler = (WrappedComponent, axios) => {
@@ -46,13 +47,13 @@ const withErrorHandler = (WrappedComponent, axios) => {
                   {this.state.error.message} <br /> The requested page has not
                   been found
                 </h3>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.onRefreshTable}
-                >
-                  Refresh Table
-                </Button>
+                <Link to="/">
+                  {" "}
+                  <Button variant="contained" color="primary">
+                    {" "}
+                    Refresh Table
+                  </Button>
+                </Link>
               </div>
             ) : null}
           </div>
