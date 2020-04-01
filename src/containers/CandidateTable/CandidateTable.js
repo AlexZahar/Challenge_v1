@@ -297,6 +297,12 @@ class CandidateTable extends Component {
               <Link to="/candidates">
                 <img
                   onClick={this.onRefreshTable}
+                  src={refreshBtn}
+                  className={classes.Refresh__icon}
+                  alt="refresh"
+                ></img>
+              </Link>
+
               {this.formSelectorFilter()}
               {this.searchBar()}
 
