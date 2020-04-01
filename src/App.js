@@ -22,7 +22,7 @@ class App extends Component {
 
             <section>
               <Switch>
-                <Route path="/" exact component={Home} />
+                {/* <Route path="/" exact component={Home} /> */}
                 <Route path="/candidates" exact component={CandidateTable} />
                 {/* <Route
                   path={"/candidates/querry/:querry/sort/:order"}
@@ -36,12 +36,12 @@ class App extends Component {
                   path={"/candidates/querry/:querry/column/:name"}
                   component={CandidateTable}
                 />
-                {/* <Redirect from="/" to="/candidates" /> */}
-                <Route
+                <Redirect from="/" to="/candidates" />
+                {/* <Route
                   render={() => (
                     <h1>Sorry, the requested page was not found..</h1>
                   )}
-                ></Route>
+                ></Route> */}
               </Switch>
               {/* <Route path="/candidates/" component={CandidateTable} /> */}
             </section>

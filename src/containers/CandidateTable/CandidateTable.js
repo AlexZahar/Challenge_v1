@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 // import Modal from "../../components/Modal/Modal";
 import axios from "../../axios-config";
+import refreshBtn from "../../assets/refresh-btn.png";
 import PropTypes from "prop-types";
 import Spinner from "../../components/Spinner/Spinner";
 import { orderBy } from "lodash";
@@ -123,8 +124,8 @@ class CandidateTable extends Component {
   }
   // ---------------------------------------------------------------------------
   onRefreshTable = () => {
-    this.props.onFetchCandidates();
-    // this.setState({ undefinedDataRefreshBtn: false });
+    this.setState({ querry: "" });
+    this.setState({ columnToQuerry: "name" });
   };
   // ------------------------------------------------------------------------
   handleSortColumnHeaderClick(sortKey) {
@@ -293,8 +294,12 @@ class CandidateTable extends Component {
             <h2>Welcome to Personio candidate list</h2>
 
             <div className={classes.Querry__wrapper}>
+              <Link to="/candidates">
+                <img
+                  onClick={this.onRefreshTable}
               {this.formSelectorFilter()}
               {this.searchBar()}
+
               <Link
                 to={querryRoute + this.state.querry + columnName}
                 onClick={this.changeSortedCandidatesState}
